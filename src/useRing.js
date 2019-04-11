@@ -104,7 +104,7 @@ const useRing = (node, index, activeIndex, arcs, setActiveIndex, dispatch) => {
 				.data(arcs)
 				.join('path')
 				.attr('fill', 'transparent')
-				.attr('stroke', '#fff')
+				.attr('stroke', '#333')
 				.attr('d', getArc);
 		}
 	}, [node, activeIndex, arcs]);

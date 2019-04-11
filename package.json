@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@react-midi/components": "0.0.2",
     "@react-midi/hooks": "0.0.7",
     "d3": "^5.9.2",
     "react": "^16.8.6",

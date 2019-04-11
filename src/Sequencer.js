@@ -1,8 +1,11 @@
 import React, { useState, useReducer } from 'react';
 import { pie } from 'd3';
+import usePlaySequence from './usePlaySequence';
 import useRing from './useRing';
+
 const width = 500;
 const height = 500;
+
 const getInitialSequence = (layers, steps) => {
 	const sequence = [];
 	for (var i = 0; i < layers; i++) {
@@ -15,7 +18,6 @@ const getInitialSequence = (layers, steps) => {
 	}
 	return sequence;
 };
-
 const initialSequence = getInitialSequence(4, 16);
 
 const reducer = (state, action) => {
@@ -32,11 +34,13 @@ const reducer = (state, action) => {
 	}
 };
 
-const Sequencer = () => {
+const Sequencer = ({ input, output }) => {
 	const getArcs = pie().value(1);
 	const [svg, setSvg] = useState(null);
 	const [ring, setRing] = useState(0);
 	const [sequence, dispatch] = useReducer(reducer, initialSequence);
+	const [step, isPlaying, setIsPlaying] = usePlaySequence(input, output, sequence);
+	console.log(step, isPlaying);
 	useRing(svg, 0, ring, getArcs(sequence[0]), setRing, dispatch);
 	useRing(svg, 1, ring, getArcs(sequence[1]), setRing, dispatch);
 	useRing(svg, 2, ring, getArcs(sequence[2]), setRing, dispatch);
