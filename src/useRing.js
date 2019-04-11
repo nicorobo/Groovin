@@ -27,7 +27,7 @@ const getValue = (dist, inner, outer) => {
 	return Math.floor(((dist - inner) / (outer - inner)) * 127);
 };
 
-const useRing = (node, index, activeIndex, arcs, setActiveIndex) => {
+const useRing = (node, index, activeIndex, arcs, setActiveIndex, dispatch) => {
 	const contentRing = useRef(null);
 	const outlineRing = useRef(null);
 	const [edit, setEdit] = useState(false);
@@ -54,8 +54,8 @@ const useRing = (node, index, activeIndex, arcs, setActiveIndex) => {
 		const angle = Math.atan2(pos[0] - center[0], center[1] - pos[1]);
 		const realAngle = angle > 0 ? angle : 2 * Math.PI + angle;
 		const selected = arcs.find((a) => a.startAngle <= realAngle && realAngle <= a.endAngle);
-		const val = getValue(distance, inner, outer);
-		console.log(`change ${selected.index} to ${val}`);
+		const value = getValue(distance, inner, outer);
+		dispatch({ type: 'updateValue', ringIndex: index, stepIndex: selected.index, value });
 	};
 	const handleMouseup = (e) => {
 		setEdit(false);
@@ -104,7 +104,7 @@ const useRing = (node, index, activeIndex, arcs, setActiveIndex) => {
 				.data(arcs)
 				.join('path')
 				.attr('fill', 'transparent')
-				.attr('stroke', '#eee')
+				.attr('stroke', '#fff')
 				.attr('d', getArc);
 		}
 	}, [node, activeIndex, arcs]);

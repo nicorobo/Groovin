@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useReducer } from 'react';
 import { pie } from 'd3';
 import useRing from './useRing';
 const width = 500;
@@ -18,15 +18,29 @@ const getInitialSequence = (layers, steps) => {
 
 const initialSequence = getInitialSequence(4, 16);
 
+const reducer = (state, action) => {
+	switch (action.type) {
+		case 'updateValue':
+			return state.map((r, i) =>
+				i === action.ringIndex
+					? r.map((s, i) => (i === action.stepIndex ? action.value : s))
+					: r
+			);
+			break;
+		default:
+			break;
+	}
+};
+
 const Sequencer = () => {
 	const getArcs = pie().value(1);
 	const [svg, setSvg] = useState(null);
 	const [ring, setRing] = useState(0);
-	const [sequence, setSequence] = useState(initialSequence);
-	useRing(svg, 0, ring, getArcs(sequence[0]), setRing);
-	useRing(svg, 1, ring, getArcs(sequence[1]), setRing);
-	useRing(svg, 2, ring, getArcs(sequence[2]), setRing);
-	useRing(svg, 3, ring, getArcs(sequence[3]), setRing);
+	const [sequence, dispatch] = useReducer(reducer, initialSequence);
+	useRing(svg, 0, ring, getArcs(sequence[0]), setRing, dispatch);
+	useRing(svg, 1, ring, getArcs(sequence[1]), setRing, dispatch);
+	useRing(svg, 2, ring, getArcs(sequence[2]), setRing, dispatch);
+	useRing(svg, 3, ring, getArcs(sequence[3]), setRing, dispatch);
 	return <svg ref={setSvg} height={height} width={width} />;
 };
 
