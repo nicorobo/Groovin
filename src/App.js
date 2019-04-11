@@ -54,11 +54,12 @@ const getRadii = (index, activeIndex) => {
 const colors = ['#305f72', '#f1d1b5', '#f0b7a4', '#f18c8e'];
 
 const useRing = (node, index, activeIndex, arcs) => {
+	const contentRing = useRef(null);
+	const outlineRing = useRef(null);
 	const [outer, inner] = getRadii(index, activeIndex);
 	const getArc = arc()
 		.innerRadius(inner)
 		.outerRadius(outer);
-
 	const getPathFromArc = arc() // maybe memoize callback to outer/inner/activeIndex
 		.innerRadius(inner)
 		.outerRadius((d) =>
@@ -70,22 +71,29 @@ const useRing = (node, index, activeIndex, arcs) => {
 		);
 	useEffect(() => {
 		if (node) {
-			const g2 = select(node)
+			contentRing.current = select(node)
 				.append('g')
 				.attr('transform', `translate(${width / 2},${height / 2})`);
-			g2.selectAll('path')
+
+			outlineRing.current = select(node)
+				.append('g')
+				.attr('transform', `translate(${width / 2},${height / 2})`);
+		}
+	}, [node]);
+
+	useEffect(() => {
+		if (node) {
+			contentRing.current
+				.selectAll('path')
 				.data(arcs)
-				.enter()
-				.append('path')
+				.join('path')
 				.attr('fill', (d) => colors[index])
 				.attr('d', getPathFromArc);
-			const g = select(node)
-				.append('g')
-				.attr('transform', `translate(${width / 2},${height / 2})`);
-			g.selectAll('path')
+
+			outlineRing.current
+				.selectAll('path')
 				.data(arcs)
-				.enter()
-				.append('path')
+				.join('path')
 				.attr('fill', 'transparent')
 				.attr('stroke', '#eee')
 				.attr('d', getArc);
