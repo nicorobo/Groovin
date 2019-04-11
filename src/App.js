@@ -25,25 +25,17 @@ const Vis = () => {
 	const [svg, setSvg] = useState(null);
 	const [ring, setRing] = useState(0);
 	const [sequence, setSequence] = useState(initialSequence);
-	useRing(svg, 0, ring, getArcs(sequence[0]));
-	useRing(svg, 1, ring, getArcs(sequence[1]));
-	useRing(svg, 2, ring, getArcs(sequence[2]));
-	useRing(svg, 3, ring, getArcs(sequence[3]));
-	return (
-		<>
-			<svg ref={setSvg} height={height} width={width} />
-			<button onClick={() => setRing(0)}>Ring 0</button>
-			<button onClick={() => setRing(1)}>Ring 1</button>
-			<button onClick={() => setRing(2)}>Ring 2</button>
-			<button onClick={() => setRing(3)}>Ring 3</button>
-		</>
-	);
+	useRing(svg, 0, ring, getArcs(sequence[0]), setRing);
+	useRing(svg, 1, ring, getArcs(sequence[1]), setRing);
+	useRing(svg, 2, ring, getArcs(sequence[2]), setRing);
+	useRing(svg, 3, ring, getArcs(sequence[3]), setRing);
+	return <svg ref={setSvg} height={height} width={width} />;
 };
 
 const getRadii = (index, activeIndex) => {
 	const mainRadius = 250;
-	const collapsedWidth = 10;
-	const activeWidth = 50;
+	const collapsedWidth = 15;
+	const activeWidth = 140;
 	const outer =
 		mainRadius -
 		(index * collapsedWidth + (activeIndex < index ? activeWidth - collapsedWidth : 0));
@@ -53,7 +45,7 @@ const getRadii = (index, activeIndex) => {
 
 const colors = ['#305f72', '#f1d1b5', '#f0b7a4', '#f18c8e'];
 
-const useRing = (node, index, activeIndex, arcs) => {
+const useRing = (node, index, activeIndex, arcs, setActiveIndex) => {
 	const contentRing = useRef(null);
 	const outlineRing = useRef(null);
 	const [outer, inner] = getRadii(index, activeIndex);
@@ -77,7 +69,8 @@ const useRing = (node, index, activeIndex, arcs) => {
 
 			outlineRing.current = select(node)
 				.append('g')
-				.attr('transform', `translate(${width / 2},${height / 2})`);
+				.attr('transform', `translate(${width / 2},${height / 2})`)
+				.on('click', () => setActiveIndex(index));
 		}
 	}, [node]);
 
