@@ -37,7 +37,7 @@ const getValue = (dist, inner, outer) => {
 	return Math.floor(((dist - inner) / (outer - inner)) * 127);
 };
 
-const useRing = (node, index, activeIndex, data, setActiveIndex, dispatch) => {
+export const useRing = (node, index, activeIndex, data, setActiveIndex, dispatch) => {
 	const arcs = useMemo(() => pie().value(1)(data), [data]);
 	const contentRing = useRef(null);
 	const outlineRing = useRef(null);
@@ -89,21 +89,21 @@ const useRing = (node, index, activeIndex, data, setActiveIndex, dispatch) => {
 
 	useEffect(() => {
 		if (node) {
-			contentRing.current = select(node)
-				.append('g')
-				.attr('transform', `translate(${width / 2},${height / 2})`);
-
 			outlineRing.current = select(node)
 				.append('g')
 				.attr('transform', `translate(${width / 2},${height / 2})`)
-				.on('click', () => setActiveIndex(index))
-				.on('mousedown', handleMousedown);
+				.on('click', () => setActiveIndex(index));
+			contentRing.current = select(node)
+				.append('g')
+				.attr('transform', `translate(${width / 2},${height / 2})`)
+				.style('pointer-events', 'none');
+
 			return () => {
 				contentRing.current.remove();
 				outlineRing.current.remove();
 			};
 		}
-	}, [node, activeIndex]);
+	}, [node]);
 
 	useEffect(() => {
 		if (node) {
@@ -112,18 +112,44 @@ const useRing = (node, index, activeIndex, data, setActiveIndex, dispatch) => {
 				.data(arcs)
 				.join('path')
 				.attr('fill', (d) => colors[index])
-				.attr('d', getPathFromArc);
+				.attr('d', getPathFromArc)
+				.attr('stroke', '#fff')
+				.attr('stroke-width', 3);
 
 			outlineRing.current
+				.on('mousedown', handleMousedown)
 				.selectAll('path')
 				.data(arcs)
 				.join('path')
-				.attr('fill', 'transparent')
-				.attr('stroke', '#eee')
-				.attr('stroke-width', 0.5)
+				.attr('fill', '#fafafa')
+				.style('cursor', () => (activeIndex === index ? 'crosshair' : 'pointer'))
+				.attr('stroke', '#fff')
+				.attr('stroke-width', 3)
+				.transition()
+				.attr('duration', 500)
 				.attr('d', getArc);
 		}
 	}, [node, activeIndex, data]);
 };
 
-export default useRing;
+export const useOuterRing = (node, step, data) => {
+	const arcs = useMemo(() => pie().value(1)(data), []);
+	const getArc = arc()
+		.innerRadius(60)
+		.outerRadius(250);
+	useEffect(() => {
+		if (node) {
+			const f = select(node)
+				.append('g')
+				.attr('transform', `translate(${width / 2},${height / 2})`);
+			f.selectAll('path')
+				.data(arcs)
+				.join('path')
+				.attr('fill', (d, i) => (i === step ? 'rgba(255, 255, 255, .5)' : 'transparent'))
+				.attr('d', getArc)
+				// .attr('stroke', (d, i) => (i === step ? '#333' : 'none'))
+				.style('pointer-events', 'none');
+			return () => f.remove();
+		}
+	}, [node, step]);
+};

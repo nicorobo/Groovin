@@ -1,7 +1,7 @@
 import React, { useState, useReducer } from 'react';
 import styled from 'styled-components';
 import usePlaySequence from './usePlaySequence';
-import useRing from './useRing';
+import { useRing, useOuterRing } from './useRing';
 
 const width = 500;
 const height = 500;
@@ -49,12 +49,14 @@ const Sequencer = ({ input, output }) => {
 	useRing(svg, 5, ring, sequence[5], setRing, dispatch);
 	useRing(svg, 6, ring, sequence[6], setRing, dispatch);
 	useRing(svg, 7, ring, sequence[7], setRing, dispatch);
+	useOuterRing(svg, step, sequence[0]);
 	return (
 		<Container>
 			<svg ref={setSvg} height={height} width={width} />
 		</Container>
 	);
 };
+
 const Container = styled.div`
 	display: flex;
 	flex-direction: column;
