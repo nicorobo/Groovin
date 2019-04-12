@@ -1,5 +1,5 @@
-import { useEffect, useState, useRef } from 'react';
-import { select, arc, mouse } from 'd3';
+import { useEffect, useState, useRef, useMemo } from 'react';
+import { select, pie, arc, mouse } from 'd3';
 const width = 500;
 const height = 500;
 
@@ -37,7 +37,8 @@ const getValue = (dist, inner, outer) => {
 	return Math.floor(((dist - inner) / (outer - inner)) * 127);
 };
 
-const useRing = (node, index, activeIndex, arcs, setActiveIndex, dispatch) => {
+const useRing = (node, index, activeIndex, data, setActiveIndex, dispatch) => {
+	const arcs = useMemo(() => pie().value(1)(data), [data]);
 	const contentRing = useRef(null);
 	const outlineRing = useRef(null);
 	const [edit, setEdit] = useState(false);
@@ -122,7 +123,7 @@ const useRing = (node, index, activeIndex, arcs, setActiveIndex, dispatch) => {
 				.attr('stroke-width', 0.5)
 				.attr('d', getArc);
 		}
-	}, [node, activeIndex, arcs]);
+	}, [node, activeIndex, data]);
 };
 
 export default useRing;
