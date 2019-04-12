@@ -23,12 +23,13 @@ const initialSequence = getInitialSequence(8, 16);
 const reducer = (state, action) => {
 	switch (action.type) {
 		case 'updateValue':
+			// If value isn't changing, don't rerender
+			if (state[action.ringIndex][action.stepIndex] === action.value) return state;
 			return state.map((r, i) =>
 				i === action.ringIndex
 					? r.map((s, i) => (i === action.stepIndex ? action.value : s))
 					: r
 			);
-			break;
 		default:
 			break;
 	}

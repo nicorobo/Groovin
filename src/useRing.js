@@ -45,6 +45,7 @@ const useRing = (node, index, activeIndex, arcs, setActiveIndex, dispatch) => {
 	const getArc = arc()
 		.innerRadius(inner)
 		.outerRadius(outer);
+
 	const getPathFromArc = arc() // maybe memoize callback to outer/inner/activeIndex
 		.innerRadius(inner)
 		.outerRadius((d) =>
@@ -54,9 +55,11 @@ const useRing = (node, index, activeIndex, arcs, setActiveIndex, dispatch) => {
 				? outer
 				: inner
 		);
+
 	const handleMousedown = (a, b) => {
 		if (activeIndex === index) setEdit(true);
 	};
+
 	const handleMousemove = (e) => {
 		const pos = mouse(node);
 		const center = [width / 2, height / 2];
@@ -67,6 +70,7 @@ const useRing = (node, index, activeIndex, arcs, setActiveIndex, dispatch) => {
 		const value = getValue(distance, inner, outer);
 		dispatch({ type: 'updateValue', ringIndex: index, stepIndex: selected.index, value });
 	};
+
 	const handleMouseup = (e) => {
 		setEdit(false);
 	};
