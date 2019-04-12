@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useMIDIClock, useMIDIOutput, useInternalMIDIClock } from '@react-midi/hooks';
 
-const notes = [36, 37, 38, 39];
+const notes = [36, 37, 38, 39, 40, 41, 42, 43];
 
 const usePlaySequence = (input, output, sequence, tempo = 115) => {
 	const { noteOn, noteOff } = useMIDIOutput(output);

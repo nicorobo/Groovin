@@ -3,11 +3,21 @@ import { select, arc, mouse } from 'd3';
 const width = 500;
 const height = 500;
 
-const colors = ['#305f72', '#f1d1b5', '#f0b7a4', '#f18c8e'];
+const colors = [
+	'#305f72',
+	'#f1d1b5',
+	'#f0b7a4',
+	'#f18c8e',
+	'#305f72',
+	'#f1d1b5',
+	'#f0b7a4',
+	'#f18c8e',
+];
+
 const getRadii = (index, activeIndex) => {
-	const mainRadius = 200;
-	const collapsedWidth = 15;
-	const activeWidth = 140;
+	const mainRadius = 250;
+	const collapsedWidth = 10;
+	const activeWidth = 120;
 	const outer =
 		mainRadius -
 		(index * collapsedWidth + (activeIndex < index ? activeWidth - collapsedWidth : 0));
@@ -104,7 +114,8 @@ const useRing = (node, index, activeIndex, arcs, setActiveIndex, dispatch) => {
 				.data(arcs)
 				.join('path')
 				.attr('fill', 'transparent')
-				.attr('stroke', '#333')
+				.attr('stroke', '#eee')
+				.attr('stroke-width', 0.5)
 				.attr('d', getArc);
 		}
 	}, [node, activeIndex, arcs]);
