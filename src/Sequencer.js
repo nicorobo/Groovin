@@ -2,60 +2,20 @@ import React, { useState, useReducer } from 'react';
 import styled from 'styled-components';
 import usePlaySequence from './usePlaySequence';
 import { useRing, useOuterRing } from './useRing';
-import { loadState, saveState } from './local-storage';
 
 const width = 500;
 const height = 500;
 
-const getInitialSequence = (layers, steps) => {
-	const saved = loadState();
-	if (saved) return saved;
-	const sequence = [];
-	for (var i = 0; i < layers; i++) {
-		const layer = [];
-		for (var j = 0; j < steps; j++) {
-			layer.push(0);
-		}
-		sequence.push(layer);
-	}
-	return sequence;
-};
-const initialSequence = getInitialSequence(8, 16);
-
-const reducer = (state, action) => {
-	let newState = state;
-	switch (action.type) {
-		case 'updateValue':
-			// If value isn't changing, don't rerender
-			if (state[action.ringIndex][action.stepIndex] === action.value) return state;
-			newState = state.map((r, i) =>
-				i === action.ringIndex
-					? r.map((s, i) => (i === action.stepIndex ? action.value : s))
-					: r
-			);
-		default:
-			break;
-	}
-	saveState(newState);
-	return newState;
-};
-
-/// I'm changing useRing to use data instead of arcs!
-
-const Sequencer = ({ input, output }) => {
+const Sequencer = ({ input, output, sequencer, dispatch }) => {
+	const sequence = sequencer.current.sequence;
+	const tracks = sequencer.tracks;
 	const [svg, setSvg] = useState(null);
 	const [ring, setRing] = useState(0);
-	const [sequence, dispatch] = useReducer(reducer, initialSequence);
 	const [step, isPlaying, setIsPlaying] = usePlaySequence(input, output, sequence);
-	useRing(svg, 0, ring, sequence[0], setRing, dispatch);
-	useRing(svg, 1, ring, sequence[1], setRing, dispatch);
-	useRing(svg, 2, ring, sequence[2], setRing, dispatch);
-	useRing(svg, 3, ring, sequence[3], setRing, dispatch);
-	useRing(svg, 4, ring, sequence[4], setRing, dispatch);
-	useRing(svg, 5, ring, sequence[5], setRing, dispatch);
-	useRing(svg, 6, ring, sequence[6], setRing, dispatch);
-	useRing(svg, 7, ring, sequence[7], setRing, dispatch);
-	useOuterRing(svg, step, sequence[0]);
+	for (var i = 0; i < tracks.length; i++) {
+		useRing(svg, i, ring, sequence[i], tracks[i], setRing, dispatch);
+	}
+	useOuterRing(svg, step, isPlaying, sequence[0]);
 	return (
 		<Container>
 			<svg ref={setSvg} height={height} width={width} />
