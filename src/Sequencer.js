@@ -2,11 +2,14 @@ import React, { useState, useReducer } from 'react';
 import styled from 'styled-components';
 import usePlaySequence from './usePlaySequence';
 import { useRing, useOuterRing } from './useRing';
+import { loadState, saveState } from './local-storage';
 
 const width = 500;
 const height = 500;
 
 const getInitialSequence = (layers, steps) => {
+	const saved = loadState();
+	if (saved) return saved;
 	const sequence = [];
 	for (var i = 0; i < layers; i++) {
 		const layer = [];
@@ -20,11 +23,12 @@ const getInitialSequence = (layers, steps) => {
 const initialSequence = getInitialSequence(8, 16);
 
 const reducer = (state, action) => {
+	let newState = state;
 	switch (action.type) {
 		case 'updateValue':
 			// If value isn't changing, don't rerender
 			if (state[action.ringIndex][action.stepIndex] === action.value) return state;
-			return state.map((r, i) =>
+			newState = state.map((r, i) =>
 				i === action.ringIndex
 					? r.map((s, i) => (i === action.stepIndex ? action.value : s))
 					: r
@@ -32,6 +36,8 @@ const reducer = (state, action) => {
 		default:
 			break;
 	}
+	saveState(newState);
+	return newState;
 };
 
 /// I'm changing useRing to use data instead of arcs!

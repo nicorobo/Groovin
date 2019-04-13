@@ -109,7 +109,7 @@ export const useRing = (node, index, activeIndex, data, setActiveIndex, dispatch
 				.selectAll('path')
 				.data(arcs)
 				.join('path')
-				.attr('fill', (d) => colors[1][index])
+				.attr('fill', (d) => colors[4][index])
 				.attr('d', getPathFromArc)
 				.attr('stroke', '#fff')
 				.attr('stroke-width', 3);
