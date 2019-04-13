@@ -23,10 +23,10 @@ const Sequencer = ({ input, output, sequencer, dispatch }) => {
 };
 
 const Container = styled.div`
+	grid-area: 'b';
 	display: flex;
-	flex-direction: column;
+	justify-content: center;
 	align-items: center;
-	margin-top: 2rem;
 `;
 
 export default Sequencer;

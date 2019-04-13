@@ -10,8 +10,6 @@ const colors = [
 ];
 
 const getInitialSequence = (layers, steps) => {
-	const saved = loadState();
-	if (saved) return saved;
 	const sequence = [];
 	for (var i = 0; i < layers; i++) {
 		const layer = [];
@@ -23,7 +21,7 @@ const getInitialSequence = (layers, steps) => {
 	return sequence;
 };
 
-export const initialState = {
+export const initialState = loadState() || {
 	tracks: [
 		{ name: 'Track 1', note: 36, channel: 10, color: colors[0][0] },
 		{ name: 'Track 2', note: 37, channel: 10, color: colors[0][1] },
@@ -63,6 +61,6 @@ export const reducer = (state, action) => {
 		default:
 			break;
 	}
-	// saveState(newState);
+	saveState(newState);
 	return newState;
 };

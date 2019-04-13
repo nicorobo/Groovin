@@ -12,6 +12,12 @@ const TrackList = ({ output, tracks, dispatch }) => {
 	);
 };
 
-const Container = styled.div``;
+const Container = styled.div`
+	grid-area: 'a';
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	padding: 0 1rem;
+`;
 
 export default TrackList;
