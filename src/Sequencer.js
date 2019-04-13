@@ -7,13 +7,12 @@ const width = 500;
 const height = 500;
 
 const Sequencer = ({ input, output, sequencer, dispatch }) => {
-	const sequence = sequencer.current.sequence;
-	const tracks = sequencer.tracks;
+	const { tracks, current, ring } = sequencer;
+	const sequence = current.sequence;
 	const [svg, setSvg] = useState(null);
-	const [ring, setRing] = useState(0);
 	const [step, isPlaying, setIsPlaying] = usePlaySequence(input, output, sequence);
 	for (var i = 0; i < tracks.length; i++) {
-		useRing(svg, i, ring, sequence[i], tracks[i], setRing, dispatch);
+		useRing(svg, i, ring, sequence[i], tracks[i], dispatch);
 	}
 	useOuterRing(svg, step, isPlaying, sequence[0]);
 	return (

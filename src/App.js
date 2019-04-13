@@ -20,7 +20,7 @@ const App = () => {
 				outputs={outputs}
 				onOutputChange={setOutput}
 			/>
-			{output && <TrackList output={output} tracks={sequencer.tracks} />}
+			{output && <TrackList output={output} tracks={sequencer.tracks} dispatch={dispatch} />}
 			{input && (
 				<Sequencer
 					input={input}

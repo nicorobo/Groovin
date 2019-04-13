@@ -26,7 +26,7 @@ const getValue = (dist, inner, outer) => {
 	return Math.floor(((dist - inner) / (outer - inner)) * 127);
 };
 
-export const useRing = (node, index, activeIndex, data, track, setActiveIndex, dispatch) => {
+export const useRing = (node, index, activeIndex, data, track, dispatch) => {
 	const arcs = useMemo(() => pie().value(1)(data), [data]);
 	const contentRing = useRef(null);
 	const outlineRing = useRef(null);
@@ -81,7 +81,7 @@ export const useRing = (node, index, activeIndex, data, track, setActiveIndex, d
 			outlineRing.current = select(node)
 				.append('g')
 				.attr('transform', `translate(${width / 2},${height / 2})`)
-				.on('click', () => setActiveIndex(index));
+				.on('click', () => dispatch({ type: 'selectRing', ring: index }));
 			contentRing.current = select(node)
 				.append('g')
 				.attr('transform', `translate(${width / 2},${height / 2})`)

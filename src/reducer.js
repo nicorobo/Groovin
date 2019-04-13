@@ -34,6 +34,7 @@ export const initialState = {
 		{ name: 'Track 7', note: 42, channel: 10, color: colors[0][6] },
 		{ name: 'Track 8', note: 43, channel: 10, color: colors[0][7] },
 	],
+	ring: 0,
 	current: { index: 0, name: 'Loop 1', sequence: getInitialSequence(8, 16) },
 	saved: [
 		{ name: 'Loop 1', sequence: [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]] },
@@ -45,15 +46,20 @@ export const reducer = (state, action) => {
 	let newState = state;
 	switch (action.type) {
 		case 'updateValue':
+			const { ringIndex, stepIndex, value } = action;
 			// If value isn't changing, don't rerender
-			if (state.current.sequence[action.ringIndex][action.stepIndex] === action.value)
-				return state;
+			if (state.current.sequence[ringIndex][stepIndex] === value) return state;
 			const sequence = state.current.sequence.map((r, i) =>
-				i === action.ringIndex
-					? r.map((s, i) => (i === action.stepIndex ? action.value : s))
-					: r
+				i === ringIndex ? r.map((s, i) => (i === stepIndex ? value : s)) : r
 			);
 			newState = { ...state, current: { ...state.current, sequence } };
+			break;
+		case 'selectRing':
+			const { ring } = action;
+			// If value isn't changing, don't rerender
+			if (state.ring === ring) return state;
+			newState = { ...state, ring };
+			break;
 		default:
 			break;
 	}
