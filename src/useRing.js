@@ -4,14 +4,12 @@ const width = 500;
 const height = 500;
 
 const colors = [
-	'#305f72',
-	'#f1d1b5',
-	'#f0b7a4',
-	'#f18c8e',
-	'#305f72',
-	'#f1d1b5',
-	'#f0b7a4',
-	'#f18c8e',
+	['#305f72', '#f1d1b5', '#f0b7a4', '#f18c8e', '#305f72', '#f1d1b5', '#f0b7a4', '#f18c8e'],
+	['#F18E8F', '#F0A89C', '#F1C4AD', '#E7D2BC', '#C6D5D6', '#ACD1F0', '#BDC4F1', '#CEB5F1'],
+	['#D4322E', '#F26E4A', '#FBAD68', '#FDDF95', '#E6F49D', '#ACDCA6', '#6AC1A5', '#3585B5'],
+	['#D4322E', '#F26E4A', '#FBAD68', '#FDDF95', '#E0F3F8', '#ACD1F0', '#76ADCF', '#4470AA'],
+	['#8260C2', '#7471BA', '#6780B2', '#5C8CAC', '#509AA5', '#44A69E', '#39B297', '#2EBF91'],
+	['#113442', '#174B4E', '#1C615A', '#227865', '#288D72', '#32B184', '#35BA88', '#3585B5'],
 ];
 
 const getRadii = (index, activeIndex) => {
@@ -111,7 +109,7 @@ export const useRing = (node, index, activeIndex, data, setActiveIndex, dispatch
 				.selectAll('path')
 				.data(arcs)
 				.join('path')
-				.attr('fill', (d) => colors[index])
+				.attr('fill', (d) => colors[1][index])
 				.attr('d', getPathFromArc)
 				.attr('stroke', '#fff')
 				.attr('stroke-width', 3);

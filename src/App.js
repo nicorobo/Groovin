@@ -18,9 +18,14 @@ const App = () => {
 				outputs={outputs}
 				onOutputChange={setOutput}
 			/>
+			{output && <RingList output={output} />}
 			{input && <Sequencer input={input} output={output} />}
 		</div>
 	);
+};
+
+const RingList = ({ output }) => {
+	return <div>bob</div>;
 };
 
 export default App;
