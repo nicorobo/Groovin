@@ -2,6 +2,7 @@ import React, { useReducer } from 'react';
 import { useMIDI, useMIDIConnectionManager } from '@react-midi/hooks';
 import { MIDIConnectionManager } from '@react-midi/components';
 import { reducer, initialState } from './reducer';
+import TrackList from './TrackList';
 import Sequencer from './Sequencer';
 
 const App = () => {
@@ -19,7 +20,7 @@ const App = () => {
 				outputs={outputs}
 				onOutputChange={setOutput}
 			/>
-			{output && <RingList output={output} />}
+			{output && <TrackList output={output} tracks={sequencer.tracks} />}
 			{input && (
 				<Sequencer
 					input={input}
@@ -30,10 +31,6 @@ const App = () => {
 			)}
 		</div>
 	);
-};
-
-const RingList = ({ output }) => {
-	return <div>bob</div>;
 };
 
 export default App;
