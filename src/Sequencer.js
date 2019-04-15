@@ -1,7 +1,7 @@
-import React, { useState, useReducer } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import usePlaySequence from './usePlaySequence';
-import { useRing, useOuterRing } from './useRing';
+import { useRing, useOuterRing, useTransport } from './drawing';
 
 const width = 500;
 const height = 500;
@@ -15,6 +15,7 @@ const Sequencer = ({ input, output, sequencer, dispatch }) => {
 		useRing(svg, i, ring, sequence[i], tracks[i], dispatch);
 	}
 	useOuterRing(svg, step, isPlaying, sequence[0]);
+	useTransport(svg, isPlaying, setIsPlaying);
 	return (
 		<Container>
 			<svg ref={setSvg} height={height} width={width} />

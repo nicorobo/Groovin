@@ -144,3 +144,29 @@ export const useOuterRing = (node, step, isPlaying, data) => {
 		}
 	}, [node, step]);
 };
+
+export const useTransport = (node, isPlaying, setIsPlaying) => {
+	useEffect(() => {
+		if (node) {
+			const f = select(node)
+				.append('g')
+				.attr('transform', `translate(${width / 2},${height / 2})`)
+				.style('cursor', 'pointer')
+				.attr('fill', '#555');
+			if (isPlaying) {
+				f.append('rect')
+					.attr('x', -25)
+					.attr('y', -25)
+					.attr('width', 50)
+					.attr('height', 50)
+					.on('click', () => setIsPlaying(false));
+			} else {
+				f.append('polygon')
+					.attr('points', '26.5 5 58 58 -5 58')
+					.attr('transform', 'rotate(90.000000) translate(-26.500000, -40.500000)')
+					.on('click', () => setIsPlaying(true));
+			}
+			return () => f.remove();
+		}
+	}, [node, isPlaying]);
+};
