@@ -11,6 +11,9 @@ const TrackItem = ({ output, track, index, dispatch }) => {
 	const handleNameClick = () => {
 		dispatch({ type: 'selectRing', ring: index });
 	};
+	const handleClearTrack = () => {
+		dispatch({ type: 'clearTrack', ring: index });
+	};
 	return (
 		<Container>
 			<Button color={track.color} onClick={handleButtonClick} />
@@ -20,6 +23,7 @@ const TrackItem = ({ output, track, index, dispatch }) => {
 					<Note>Note: {track.note}</Note>
 					<Channel>Channel: {track.channel}</Channel>
 				</MIDIInfo>
+				<Clear onClick={handleClearTrack}>Clear</Clear>
 			</Info>
 		</Container>
 	);
@@ -38,6 +42,11 @@ const Button = styled.div`
 	margin-right: 0.5rem;
 `;
 const Info = styled.div``;
+const Clear = styled.div`
+	font-size: 0.75rem;
+	color: salmon;
+	cursor: pointer;
+`;
 const Name = styled.div`
 	cursor: pointer;
 `;

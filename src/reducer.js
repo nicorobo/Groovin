@@ -42,12 +42,13 @@ export const initialState = loadState() || {
 
 export const reducer = (state, action) => {
 	let newState = state;
+	let sequence = null;
 	switch (action.type) {
 		case 'updateValue':
 			const { ringIndex, stepIndex, value } = action;
 			// If value isn't changing, don't rerender
 			if (state.current.sequence[ringIndex][stepIndex] === value) return state;
-			const sequence = state.current.sequence.map((r, i) =>
+			sequence = state.current.sequence.map((r, i) =>
 				i === ringIndex ? r.map((s, i) => (i === stepIndex ? value : s)) : r
 			);
 			newState = { ...state, current: { ...state.current, sequence } };
@@ -58,6 +59,11 @@ export const reducer = (state, action) => {
 			if (state.ring === ring) return state;
 			newState = { ...state, ring };
 			break;
+		case 'clearTrack':
+			sequence = state.current.sequence.map((t, i) =>
+				i === action.ring ? t.map((v) => 0) : t
+			);
+			newState = { ...state, current: { ...state.current, sequence } };
 		default:
 			break;
 	}
