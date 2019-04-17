@@ -142,7 +142,7 @@ export const useOuterRing = (node, step, isPlaying, data) => {
 				.style('pointer-events', 'none');
 			return () => f.remove();
 		}
-	}, [node, step]);
+	}, [node, step, isPlaying]);
 };
 
 export const useTransport = (node, isPlaying, setIsPlaying) => {
