@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useMIDIClock, useMIDIOutput, useInternalMIDIClock } from '@react-midi/hooks';
-
+import { useInternalAudio } from './useInternalAudio';
 const notes = [36, 37, 38, 39, 40, 41, 42, 43];
 
 const usePlaySequence = (input, output, sequence, tempo = 115) => {
 	const { noteOn, noteOff } = useMIDIOutput(output);
+	const { noteOnInternal, noteOffInternal } = useInternalAudio();
 	const [step, isPlaying, setIsPlaying, setTempo] = useTwoWayClock(input, output, 6, tempo);
 	const currentStep = step % sequence[0].length;
 	const notesOff = (step) => {
@@ -12,6 +13,7 @@ const usePlaySequence = (input, output, sequence, tempo = 115) => {
 			const val = ring[step];
 			if (val <= 0) return false;
 			noteOff(notes[i], val, 10);
+			noteOffInternal(notes[i], val, 10);
 		});
 	};
 	const notesOn = (step) => {
@@ -19,6 +21,7 @@ const usePlaySequence = (input, output, sequence, tempo = 115) => {
 			const val = ring[step];
 			if (val <= 0) return false;
 			noteOn(notes[i], val, 10);
+			noteOnInternal(notes[i], val, 10);
 		});
 	};
 	useEffect(() => {
