@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useMIDIOutput } from '@react-midi/hooks';
+import { lighten } from 'polished';
 import { useInternalAudio } from './useInternalAudio';
 
 const TrackItem = ({ output, track, index, dispatch }) => {
@@ -28,15 +28,23 @@ const TrackItem = ({ output, track, index, dispatch }) => {
 
 const Container = styled.div`
 	display: flex;
+	align-items: center;
 	color: #333;
 	margin-bottom: 1rem;
 `;
 const Button = styled.div`
 	height: 30px;
 	width: 30px;
+	cursor: pointer;
 	background: ${(props) => props.color};
 	border-radius: 50%;
 	margin-right: 0.5rem;
+	&:hover {
+		background: ${(props) => lighten(0.05, props.color)};
+	}
+	&:active {
+		background: ${(props) => props.color};
+	}
 `;
 const Info = styled.div``;
 const Clear = styled.div`
@@ -45,6 +53,7 @@ const Clear = styled.div`
 	cursor: pointer;
 `;
 const Name = styled.div`
+	font-size: 0.85rem;
 	cursor: pointer;
 `;
 

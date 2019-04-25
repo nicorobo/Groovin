@@ -64,6 +64,7 @@ export const reducer = (state, action) => {
 				i === action.ring ? t.map((v) => 0) : t
 			);
 			newState = { ...state, current: { ...state.current, sequence } };
+			break;
 		default:
 			break;
 	}
