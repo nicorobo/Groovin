@@ -9,7 +9,7 @@ const samples = [
 	require('./sounds/drum5.wav'),
 	require('./sounds/drum6.wav'),
 	require('./sounds/drum7.wav'),
-	require('./sounds/drum8.WAV'),
+	require('./sounds/drum8.wav'),
 ];
 
 export const useInternalAudio = (output) => {
