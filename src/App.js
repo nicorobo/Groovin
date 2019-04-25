@@ -7,29 +7,24 @@ import TrackList from './TrackList';
 import Sequencer from './Sequencer';
 
 const App = () => {
-	const [inputs, outputs] = useMIDI();
+	const [inputs, outputs, hasMIDI] = useMIDI();
 	const [input, setInput] = useMIDIConnectionManager(inputs);
 	const [output, setOutput] = useMIDIConnectionManager(outputs);
 	const [sequencer, dispatch] = useReducer(reducer, initialState);
 	return (
 		<Container>
-			<MIDIConnectionManager
-				input={input}
-				inputs={inputs}
-				onInputChange={setInput}
-				output={output}
-				outputs={outputs}
-				onOutputChange={setOutput}
-			/>
-			{output && <TrackList output={output} tracks={sequencer.tracks} dispatch={dispatch} />}
-			{input && (
-				<Sequencer
+			{hasMIDI && (
+				<MIDIConnectionManager
 					input={input}
+					inputs={inputs}
+					onInputChange={setInput}
 					output={output}
-					sequencer={sequencer}
-					dispatch={dispatch}
+					outputs={outputs}
+					onOutputChange={setOutput}
 				/>
 			)}
+			<TrackList output={output} tracks={sequencer.tracks} dispatch={dispatch} />
+			<Sequencer input={input} output={output} sequencer={sequencer} dispatch={dispatch} />
 		</Container>
 	);
 };

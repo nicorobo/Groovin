@@ -1,28 +1,30 @@
 import { useState, useEffect, useRef } from 'react';
+import { useMIDIOutput } from '@react-midi/hooks';
 const notes = { 36: 0, 37: 1, 38: 2, 39: 3, 40: 4, 41: 5, 42: 6, 43: 7 };
 const samples = [
 	require('./sounds/drum1.wav'),
 	require('./sounds/drum2.wav'),
-	require('./sounds/drum3.WAV'),
+	require('./sounds/drum3.wav'),
 	require('./sounds/drum4.WAV'),
-	require('./sounds/drum5.wav'),
-	require('./sounds/drum6.wav'),
+	require('./sounds/drum5.WAV'),
+	require('./sounds/drum6.WAV'),
 	require('./sounds/drum7.wav'),
-	require('./sounds/drum8.wav'),
+	require('./sounds/drum8.WAV'),
 ];
 
-export const useInternalAudio = () => {
+export const useInternalAudio = (output) => {
+	const { noteOn, noteOff } = useMIDIOutput(output);
 	const audio = useRef();
 	const sounds = useRef([]);
 	const nodes = useRef([]);
 	useEffect(() => {
 		audio.current = new (window.AudioContext || window.webkitAudioContext)();
-		samples.forEach((s) => {
+		samples.forEach((s, i) => {
 			fetch(s)
 				.then((res) => res.arrayBuffer())
 				.then((data) => audio.current.decodeAudioData(data))
 				.then((buffer) => {
-					sounds.current.push(buffer);
+					sounds.current[i] = buffer;
 				});
 		});
 		nodes.current = samples.map((s) => {
@@ -31,19 +33,19 @@ export const useInternalAudio = () => {
 			return gain;
 		});
 	}, []);
-	const noteOnInternal = (note, velocity) => {
+	const noteOnInternal = (note, velocity, channel) => {
+		if (noteOn) noteOn(note, velocity, channel);
 		const bufferNode = audio.current.createBufferSource();
 		bufferNode.buffer = sounds.current[notes[note]];
 		const gainNode = nodes.current[notes[note]];
-		// console.log((1 / 127) * velocity);
 		gainNode.gain.value = (1 / 127) * velocity;
 		bufferNode.connect(gainNode);
-		// console.log(bufferNode);
 		bufferNode.start();
 	};
-	const noteOffInternal = (note, velocity) => {
+	const noteOffInternal = (note, velocity, channel) => {
+		if (noteOff) noteOff(note, velocity, channel);
 		return false;
 	};
 
-	return { noteOnInternal, noteOffInternal };
+	return { noteOn: noteOnInternal, noteOff: noteOffInternal };
 };

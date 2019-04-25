@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useMIDIOutput } from '@react-midi/hooks';
+import { useInternalAudio } from './useInternalAudio';
 
 const TrackItem = ({ output, track, index, dispatch }) => {
-	const { noteOn, noteOff } = useMIDIOutput(output);
+	const { noteOn, noteOff } = useInternalAudio(output);
 	const handleButtonClick = () => {
 		noteOn(track.note, 100, track.channel);
 		setTimeout(() => noteOff(track.note, 100, track.channel), 500);
@@ -19,10 +20,6 @@ const TrackItem = ({ output, track, index, dispatch }) => {
 			<Button color={track.color} onClick={handleButtonClick} />
 			<Info>
 				<Name onClick={handleNameClick}>{track.name}</Name>
-				<MIDIInfo>
-					<Note>Note: {track.note}</Note>
-					<Channel>Channel: {track.channel}</Channel>
-				</MIDIInfo>
 				<Clear onClick={handleClearTrack}>Clear</Clear>
 			</Info>
 		</Container>
@@ -50,13 +47,5 @@ const Clear = styled.div`
 const Name = styled.div`
 	cursor: pointer;
 `;
-const MIDIInfo = styled.div`
-	display: flex;
-	font-size: 0.75rem;
-`;
-const Note = styled.div`
-	margin-right: 0.5rem;
-`;
-const Channel = styled.div``;
 
 export default TrackItem;

@@ -23,14 +23,14 @@ const getInitialSequence = (layers, steps) => {
 
 export const initialState = loadState() || {
 	tracks: [
-		{ name: 'Kick', note: 36, channel: 10, color: colors[0][0] },
-		{ name: 'Snare', note: 37, channel: 10, color: colors[0][1] },
-		{ name: 'Clap', note: 38, channel: 10, color: colors[0][2] },
-		{ name: 'Closed HH', note: 39, channel: 10, color: colors[0][3] },
-		{ name: 'Open HH', note: 40, channel: 10, color: colors[0][4] },
-		{ name: 'Low Tom', note: 41, channel: 10, color: colors[0][5] },
-		{ name: 'Mid Tom', note: 42, channel: 10, color: colors[0][6] },
-		{ name: 'High Tom', note: 43, channel: 10, color: colors[0][7] },
+		{ name: 'Drum 1', note: 36, channel: 10, color: colors[0][0] },
+		{ name: 'Drum 2', note: 37, channel: 10, color: colors[0][1] },
+		{ name: 'Drum 3', note: 38, channel: 10, color: colors[0][2] },
+		{ name: 'Drum 4', note: 39, channel: 10, color: colors[0][3] },
+		{ name: 'Drum 5', note: 40, channel: 10, color: colors[0][4] },
+		{ name: 'Drum 6', note: 41, channel: 10, color: colors[0][5] },
+		{ name: 'Drum 7', note: 42, channel: 10, color: colors[0][6] },
+		{ name: 'Drum 8', note: 43, channel: 10, color: colors[0][7] },
 	],
 	ring: 0,
 	current: { index: 0, name: 'Loop 1', sequence: getInitialSequence(8, 16) },
