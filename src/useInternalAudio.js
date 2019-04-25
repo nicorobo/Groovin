@@ -5,9 +5,9 @@ const samples = [
 	require('./sounds/drum1.wav'),
 	require('./sounds/drum2.wav'),
 	require('./sounds/drum3.wav'),
-	require('./sounds/drum4.WAV'),
-	require('./sounds/drum5.WAV'),
-	require('./sounds/drum6.WAV'),
+	require('./sounds/drum4.wav'),
+	require('./sounds/drum5.wav'),
+	require('./sounds/drum6.wav'),
 	require('./sounds/drum7.wav'),
 	require('./sounds/drum8.WAV'),
 ];
