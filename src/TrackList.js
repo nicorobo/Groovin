@@ -2,11 +2,17 @@ import React from 'react';
 import styled from 'styled-components';
 import TrackItem from './TrackItem';
 
-const TrackList = ({ output, tracks, dispatch }) => {
+const TrackList = ({ output, activeTrack, tracks, dispatch }) => {
 	return (
 		<Container>
 			{tracks.map((t, i) => (
-				<TrackItem output={output} track={t} index={i} dispatch={dispatch} />
+				<TrackItem
+					output={output}
+					active={activeTrack === i}
+					track={t}
+					index={i}
+					dispatch={dispatch}
+				/>
 			))}
 		</Container>
 	);

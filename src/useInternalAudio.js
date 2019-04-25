@@ -24,7 +24,7 @@ export const useInternalAudio = (output) => {
 				.then((res) => res.arrayBuffer())
 				.then((data) => audio.current.decodeAudioData(data))
 				.then((buffer) => {
-					sounds.current[i] = buffer;
+					sounds.current[i] = buffer; // Need to be explicit about order because fetch is async
 				});
 		});
 		nodes.current = samples.map((s) => {

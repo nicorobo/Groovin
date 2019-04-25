@@ -58,7 +58,7 @@ export const useRing = (node, index, activeIndex, data, track, dispatch) => {
 		const realAngle = angle > 0 ? angle : 2 * Math.PI + angle;
 		const selected = arcs.find((a) => a.startAngle <= realAngle && realAngle <= a.endAngle);
 		const value = getValue(distance, inner, outer);
-		dispatch({ type: 'updateValue', ringIndex: index, stepIndex: selected.index, value });
+		dispatch({ type: 'updateValue', track: index, step: selected.index, value });
 	};
 
 	const handleMouseup = (e) => {
@@ -81,7 +81,7 @@ export const useRing = (node, index, activeIndex, data, track, dispatch) => {
 			outlineRing.current = select(node)
 				.append('g')
 				.attr('transform', `translate(${width / 2},${height / 2})`)
-				.on('click', () => dispatch({ type: 'selectRing', ring: index }));
+				.on('click', () => dispatch({ type: 'selectTrack', track: index }));
 			contentRing.current = select(node)
 				.append('g')
 				.attr('transform', `translate(${width / 2},${height / 2})`)

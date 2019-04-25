@@ -8,15 +8,15 @@ const usePlaySequence = (input, output, sequence, tempo = 115) => {
 	const [step, isPlaying, setIsPlaying, setTempo] = useTwoWayClock(input, output, 6, tempo);
 	const currentStep = step % sequence[0].length;
 	const notesOff = (step) => {
-		sequence.forEach((ring, i) => {
-			const val = ring[step];
+		sequence.forEach((track, i) => {
+			const val = track[step];
 			if (val <= 0) return false;
 			noteOff(notes[i], val, 10);
 		});
 	};
 	const notesOn = (step) => {
-		sequence.forEach((ring, i) => {
-			const val = ring[step];
+		sequence.forEach((track, i) => {
+			const val = track[step];
 			if (val <= 0) return false;
 			noteOn(notes[i], val, 10);
 		});

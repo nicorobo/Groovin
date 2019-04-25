@@ -10,10 +10,10 @@ const TrackItem = ({ output, track, index, dispatch }) => {
 		setTimeout(() => noteOff(track.note, 100, track.channel), 500);
 	};
 	const handleNameClick = () => {
-		dispatch({ type: 'selectRing', ring: index });
+		dispatch({ type: 'selectTrack', track: index });
 	};
 	const handleClearTrack = () => {
-		dispatch({ type: 'clearTrack', ring: index });
+		dispatch({ type: 'clearTrack', track: index });
 	};
 	return (
 		<Container>
