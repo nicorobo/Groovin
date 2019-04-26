@@ -38,7 +38,7 @@ const Container = styled.div`
 	height: 100%;
 	display: grid;
 	grid-template-columns: 200px auto 200px;
-	grid-template-rows: auto 80px;
+	grid-template-rows: auto 40px;
 	grid-template-areas: 'a b c' 'd d d';
 `;
 export default App;

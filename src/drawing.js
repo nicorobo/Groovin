@@ -102,18 +102,18 @@ export const useRing = (node, index, activeIndex, data, track, dispatch) => {
 				.join('path')
 				.attr('fill', (d) => track.color)
 				.attr('d', getPathFromArc)
-				.attr('stroke', '#fff')
-				.attr('stroke-width', 3);
+				.attr('stroke', '#333')
+				.attr('stroke-width', 0.5);
 
 			outlineRing.current
 				.on('mousedown', handleMousedown)
 				.selectAll('path')
 				.data(arcs)
 				.join('path')
-				.attr('fill', '#fafafa')
+				.attr('fill', '#fff')
 				.style('cursor', () => (activeIndex === index ? 'crosshair' : 'pointer'))
-				.attr('stroke', '#fff')
-				.attr('stroke-width', 3)
+				.attr('stroke', '#333')
+				.attr('stroke-width', 0.5)
 				.transition()
 				.attr('duration', 500)
 				.attr('d', getArc);

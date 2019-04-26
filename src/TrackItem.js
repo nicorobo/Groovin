@@ -47,10 +47,8 @@ const Button = styled.div`
 	}
 `;
 const Info = styled.div``;
-const Clear = styled.div`
+const Clear = styled.button`
 	font-size: 0.75rem;
-	color: salmon;
-	cursor: pointer;
 `;
 const Name = styled.div`
 	font-size: 0.85rem;

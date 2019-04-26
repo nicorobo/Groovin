@@ -53,6 +53,12 @@ export const reducer = (state, action) => {
 			);
 			newState = { ...state, current: { ...state.current, sequence } };
 			break;
+		case 'clearAll':
+			newState = {
+				...state,
+				current: { ...state.current, sequence: getInitialSequence(8, 16) },
+			};
+			break;
 		case 'selectTrack':
 			const { track: t } = action;
 			// If value isn't changing, don't rerender
