@@ -121,7 +121,7 @@ export const useRing = (node, index, activeIndex, data, track, dispatch) => {
 	}, [node, activeIndex, data]);
 };
 
-export const useOuterRing = (node, step, isPlaying, data) => {
+export const useStepMarker = (node, step, isPlaying, data, color) => {
 	const arcs = useMemo(() => pie().value(1)(data), []);
 	const getArc = arc()
 		.innerRadius(256)
@@ -134,7 +134,7 @@ export const useOuterRing = (node, step, isPlaying, data) => {
 			f.selectAll('path')
 				.data(arcs)
 				.join('path')
-				.attr('fill', (d, i) => (i === step && isPlaying ? '#39B297' : 'transparent'))
+				.attr('fill', (d, i) => (i === step && isPlaying ? color : 'transparent'))
 				.attr('d', getArc)
 				// .attr('stroke', (d, i) => (i === step ? '#333' : 'none'))
 				.style('pointer-events', 'none');
