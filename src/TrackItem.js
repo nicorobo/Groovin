@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { lighten } from 'polished';
 import { useInternalAudio } from './useInternalAudio';
 
-const TrackItem = ({ output, track, index, dispatch }) => {
+const TrackItem = ({ output, track, index, active, soloed, dispatch }) => {
 	const { noteOn, noteOff } = useInternalAudio(output);
 	const handleButtonClick = () => {
 		noteOn(track.note, 100, track.channel);
@@ -15,12 +15,25 @@ const TrackItem = ({ output, track, index, dispatch }) => {
 	const handleClearTrack = () => {
 		dispatch({ type: 'clearTrack', track: index });
 	};
+	const handleMuteTrack = () => {
+		dispatch({ type: 'muteTrack', track: index });
+	};
+	const handleSoloTrack = () => {
+		dispatch({ type: 'soloTrack', track: index });
+	};
+	console.log(track);
 	return (
 		<Container>
 			<Button color={track.color} onClick={handleButtonClick} />
 			<Info>
 				<Name onClick={handleNameClick}>{track.name}</Name>
-				<Clear onClick={handleClearTrack}>Clear</Clear>
+				<Clear onClick={handleClearTrack}>C</Clear>
+				<Mute active={track.muted} onClick={handleMuteTrack}>
+					M
+				</Mute>
+				<Solo active={soloed} onClick={handleSoloTrack}>
+					S
+				</Solo>
 			</Info>
 		</Container>
 	);
@@ -47,12 +60,27 @@ const Button = styled.div`
 	}
 `;
 const Info = styled.div``;
-const Clear = styled.button`
-	font-size: 0.75rem;
-`;
 const Name = styled.div`
 	font-size: 0.85rem;
 	cursor: pointer;
+	margin-bottom: 0.2rem;
+`;
+const Clear = styled.button`
+	font-size: 0.75rem;
+	cursor: pointer;
+	margin-right: 0.2rem;
+`;
+const Mute = styled.button`
+	font-size: 0.75rem;
+	cursor: pointer;
+	margin-right: 0.2rem;
+	background-color: ${(props) => (props.active ? 'red' : '')};
+`;
+const Solo = styled.button`
+	font-size: 0.75rem;
+	cursor: pointer;
+	margin-right: 0.2rem;
+	background-color: ${(props) => (props.active ? 'blue' : '')};
 `;
 
 export default TrackItem;

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import TrackItem from './TrackItem';
 
-const TrackList = ({ output, activeTrack, tracks, dispatch }) => {
+const TrackList = ({ output, activeTrack, soloed, tracks, dispatch }) => {
 	const handleClear = () => {
 		dispatch({ type: 'clearAll' });
 	};
@@ -11,9 +11,10 @@ const TrackList = ({ output, activeTrack, tracks, dispatch }) => {
 			{tracks.map((t, i) => (
 				<TrackItem
 					output={output}
-					active={activeTrack === i}
 					track={t}
 					index={i}
+					active={activeTrack === i}
+					soloed={soloed === i}
 					dispatch={dispatch}
 				/>
 			))}

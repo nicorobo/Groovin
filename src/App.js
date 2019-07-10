@@ -27,6 +27,7 @@ const App = () => {
 				output={output}
 				activeTrack={sequencer.activeTrack}
 				tracks={sequencer.tracks}
+				soloed={sequencer.soloed}
 				dispatch={dispatch}
 			/>
 			<Sequencer input={input} output={output} sequencer={sequencer} dispatch={dispatch} />
