@@ -19,7 +19,10 @@ const usePlaySequence = (input, output, sequencer, tempo = 115) => {
 	const notesOn = (step) => {
 		sequence.forEach((track, i) => {
 			const val = track[step];
-			if (val <= 0 || tracks[i].muted) return false;
+			const isSoloed = i === soloed;
+
+			if (val <= 0 || (tracks[i].muted && !isSoloed) || (soloed !== null && !isSoloed))
+				return false;
 			noteOn(notes[i], val, 10);
 		});
 	};
