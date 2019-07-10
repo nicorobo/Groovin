@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef, useMemo } from 'react';
 import { select, pie, arc, mouse } from 'd3';
-const width = 500;
-const height = 500;
+const width = 520;
+const height = 520;
 
 const getRadii = (index, activeIndex) => {
 	const mainRadius = 250;
@@ -124,8 +124,8 @@ export const useRing = (node, index, activeIndex, data, track, dispatch) => {
 export const useOuterRing = (node, step, isPlaying, data) => {
 	const arcs = useMemo(() => pie().value(1)(data), []);
 	const getArc = arc()
-		.innerRadius(60)
-		.outerRadius(250);
+		.innerRadius(256)
+		.outerRadius(260);
 	useEffect(() => {
 		if (node) {
 			const f = select(node)
@@ -134,9 +134,7 @@ export const useOuterRing = (node, step, isPlaying, data) => {
 			f.selectAll('path')
 				.data(arcs)
 				.join('path')
-				.attr('fill', (d, i) =>
-					i === step && isPlaying ? 'rgba(255, 255, 255, .5)' : 'transparent'
-				)
+				.attr('fill', (d, i) => (i === step && isPlaying ? '#39B297' : 'transparent'))
 				.attr('d', getArc)
 				// .attr('stroke', (d, i) => (i === step ? '#333' : 'none'))
 				.style('pointer-events', 'none');

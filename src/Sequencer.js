@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import usePlaySequence from './usePlaySequence';
 import { useRing, useOuterRing, useTransport } from './drawing';
 
-const width = 500;
-const height = 500;
+const width = 520;
+const height = 520;
 
 const Sequencer = ({ input, output, sequencer, dispatch }) => {
 	const { tracks, current, activeTrack } = sequencer;
