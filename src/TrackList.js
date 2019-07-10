@@ -2,9 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 import TrackItem from './TrackItem';
 
-const TrackList = ({ output, activeTrack, soloed, tracks, dispatch }) => {
+const TrackList = ({ output, sequencer, dispatch }) => {
+	const { activeTrack, soloed, tracks, useInternalAudio } = sequencer;
 	const handleClear = () => {
 		dispatch({ type: 'clearAll' });
+	};
+	const handleToggleInternalAudio = () => {
+		dispatch({ type: 'toggleInternalAudio' });
 	};
 	return (
 		<Container>
@@ -19,6 +23,9 @@ const TrackList = ({ output, activeTrack, soloed, tracks, dispatch }) => {
 				/>
 			))}
 			<button onClick={handleClear}>Clear All</button>
+			<button onClick={handleToggleInternalAudio}>
+				{useInternalAudio ? 'Audio Off' : 'Audio On'}
+			</button>
 		</Container>
 	);
 };

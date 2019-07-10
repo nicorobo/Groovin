@@ -20,18 +20,19 @@ const getInitialSequence = (layers, steps) => {
 };
 
 export const initialState = loadState() || {
-	soloed: null,
 	tracks: [
-		{ name: 'Drum 1', note: 36, channel: 10, color: colors[0][0], muted: false },
-		{ name: 'Drum 2', note: 37, channel: 10, color: colors[0][1], muted: false },
-		{ name: 'Drum 3', note: 38, channel: 10, color: colors[0][2], muted: false },
-		{ name: 'Drum 4', note: 39, channel: 10, color: colors[0][3], muted: false },
-		{ name: 'Drum 5', note: 40, channel: 10, color: colors[0][4], muted: false },
-		{ name: 'Drum 6', note: 41, channel: 10, color: colors[0][5], muted: false },
-		{ name: 'Drum 7', note: 42, channel: 10, color: colors[0][6], muted: false },
-		{ name: 'Drum 8', note: 43, channel: 10, color: colors[0][7], muted: false },
+		{ name: 'Drum 1', note: 36, channel: 10, color: colors[3][0], muted: false },
+		{ name: 'Drum 2', note: 37, channel: 10, color: colors[3][1], muted: false },
+		{ name: 'Drum 3', note: 38, channel: 10, color: colors[3][2], muted: false },
+		{ name: 'Drum 4', note: 39, channel: 10, color: colors[3][3], muted: false },
+		{ name: 'Drum 5', note: 40, channel: 10, color: colors[3][4], muted: false },
+		{ name: 'Drum 6', note: 41, channel: 10, color: colors[3][5], muted: false },
+		{ name: 'Drum 7', note: 42, channel: 10, color: colors[3][6], muted: false },
+		{ name: 'Drum 8', note: 43, channel: 10, color: colors[3][7], muted: false },
 	],
 	activeTrack: 0,
+	soloed: null,
+	useInternalAudio: false,
 	current: { index: 0, name: 'Loop 1', sequence: getInitialSequence(8, 16) },
 	saved: [
 		{ name: 'Loop 1', sequence: [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]] },
@@ -79,11 +80,12 @@ export const reducer = (state, action) => {
 					i === action.track ? { ...t, muted: !t.muted } : t
 				),
 			};
-			console.log('muting: ', action.track);
-			console.log(newState);
 			break;
 		case 'soloTrack':
 			newState = { ...state, soloed: action.track === state.soloed ? null : action.track };
+			break;
+		case 'toggleInternalAudio':
+			newState = { ...state, useInternalAudio: !state.useInternalAudio };
 			break;
 		default:
 			break;

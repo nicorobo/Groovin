@@ -12,7 +12,7 @@ const samples = [
 	require('./sounds/drum8.wav'),
 ];
 
-export const useInternalAudio = (output) => {
+export const useInternalAudio = (output, useInternalAudio) => {
 	const { noteOn, noteOff } = useMIDIOutput(output);
 	const audio = useRef();
 	const sounds = useRef([]);
@@ -35,6 +35,7 @@ export const useInternalAudio = (output) => {
 	}, []);
 	const noteOnInternal = (note, velocity, channel) => {
 		if (noteOn) noteOn(note, velocity, channel);
+		if (!useInternalAudio) return false;
 		const bufferNode = audio.current.createBufferSource();
 		bufferNode.buffer = sounds.current[notes[note]];
 		const gainNode = nodes.current[notes[note]];

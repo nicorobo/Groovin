@@ -6,7 +6,7 @@ const notes = [36, 37, 38, 39, 40, 41, 42, 43];
 const usePlaySequence = (input, output, sequencer, tempo = 115) => {
 	const { tracks, current, soloed } = sequencer;
 	const sequence = current.sequence;
-	const { noteOn, noteOff } = useInternalAudio(output);
+	const { noteOn, noteOff } = useInternalAudio(output, sequencer.useInternalAudio);
 	const [step, isPlaying, setIsPlaying, setTempo] = useTwoWayClock(input, output, 6, tempo);
 	const currentStep = step % sequence[0].length;
 	const notesOff = (step) => {

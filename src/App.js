@@ -23,13 +23,7 @@ const App = () => {
 					onOutputChange={setOutput}
 				/>
 			)}
-			<TrackList
-				output={output}
-				activeTrack={sequencer.activeTrack}
-				tracks={sequencer.tracks}
-				soloed={sequencer.soloed}
-				dispatch={dispatch}
-			/>
+			<TrackList output={output} sequencer={sequencer} dispatch={dispatch} />
 			<Sequencer input={input} output={output} sequencer={sequencer} dispatch={dispatch} />
 		</Container>
 	);

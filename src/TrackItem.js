@@ -21,7 +21,6 @@ const TrackItem = ({ output, track, index, active, soloed, dispatch }) => {
 	const handleSoloTrack = () => {
 		dispatch({ type: 'soloTrack', track: index });
 	};
-	console.log(track);
 	return (
 		<Container>
 			<Button color={track.color} onClick={handleButtonClick} />
