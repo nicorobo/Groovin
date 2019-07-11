@@ -5,6 +5,7 @@ import { MIDIConnectionManager } from '@react-midi/components';
 import { reducer, initialState } from './reducer';
 import TrackList from './TrackList';
 import Sequencer from './Sequencer';
+import Settings from './Settings';
 
 const App = () => {
 	const [inputs, outputs, hasMIDI] = useMIDI();
@@ -25,6 +26,7 @@ const App = () => {
 			)}
 			<TrackList output={output} sequencer={sequencer} dispatch={dispatch} />
 			<Sequencer input={input} output={output} sequencer={sequencer} dispatch={dispatch} />
+			<Settings sequencer={sequencer} dispatch={dispatch} />
 		</Container>
 	);
 };
