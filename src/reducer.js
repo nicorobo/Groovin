@@ -30,6 +30,7 @@ export const initialState = loadState() || {
 		{ name: 'Drum 7', note: 42, channel: 10, type: 'drum', color: colors[3][6], muted: false },
 		{ name: 'Drum 8', note: 43, channel: 10, type: 'drum', color: colors[3][7], muted: false },
 	],
+	tempo: 110,
 	activeTrack: 0,
 	soloed: null,
 	useInternalAudio: false,
@@ -86,6 +87,9 @@ export const reducer = (state, action) => {
 			break;
 		case 'toggleInternalAudio':
 			newState = { ...state, useInternalAudio: !state.useInternalAudio };
+			break;
+		case 'setTempo':
+			newState = { ...state, tempo: action.tempo };
 			break;
 		case 'setChannel':
 			newState = {
