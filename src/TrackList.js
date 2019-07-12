@@ -7,9 +7,6 @@ const TrackList = ({ output, sequencer, dispatch }) => {
 	const handleClear = () => {
 		dispatch({ type: 'clearAll' });
 	};
-	const handleToggleInternalAudio = () => {
-		dispatch({ type: 'toggleInternalAudio' });
-	};
 	return (
 		<Container>
 			{tracks.map((t, i) => (
@@ -23,9 +20,6 @@ const TrackList = ({ output, sequencer, dispatch }) => {
 				/>
 			))}
 			<button onClick={handleClear}>Clear All</button>
-			<button onClick={handleToggleInternalAudio}>
-				{useInternalAudio ? 'Audio Off' : 'Audio On'}
-			</button>
 		</Container>
 	);
 };

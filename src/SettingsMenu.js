@@ -13,7 +13,10 @@ const values = getMidiValues();
 const channels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
 
 const SettingsMenu = ({ sequencer, dispatch, active }) => {
-	const { tracks, tempo } = sequencer;
+	const { tracks, tempo, useInternalAudio } = sequencer;
+	const handleToggleInternalAudio = () => {
+		dispatch({ type: 'toggleInternalAudio' });
+	};
 	return (
 		<Container className={active ? 'active' : ''}>
 			<Header>Settings</Header>
@@ -21,6 +24,9 @@ const SettingsMenu = ({ sequencer, dispatch, active }) => {
 			{tracks.map((t, i) => (
 				<TrackSettings key={t.name} index={i} track={t} dispatch={dispatch} />
 			))}
+			<AudioToggle onClick={handleToggleInternalAudio}>
+				{useInternalAudio ? 'Audio Off' : 'Audio On'}
+			</AudioToggle>
 		</Container>
 	);
 };
@@ -70,6 +76,9 @@ const Header = styled.div`
 	font-weight: bold;
 	text-align: center;
 	margin-top: 2rem;
+`;
+const AudioToggle = styled.button`
+	margin: 1rem 2rem 1rem 2rem;
 `;
 const TempoContainer = styled.div`
 	display: flex;

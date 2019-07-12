@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import SettingsMenu from './SettingsMenu';
 
 const Settings = ({ sequencer, dispatch }) => {
-	const [active, setActive] = useState(true);
+	const [active, setActive] = useState(false);
 	const openMenu = () => setActive(true);
 	const closeMenu = () => setActive(false);
 	return (
