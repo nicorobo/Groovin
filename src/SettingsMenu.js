@@ -1,33 +1,49 @@
 import React from 'react';
 import styled from 'styled-components';
+import { midiToNoteName } from '@tonaljs/midi';
+function getMidiValues() {
+	let a = [];
+	for (var i = 21; i <= 108; i++) {
+		// A0 to C8
+		a.push({ title: midiToNoteName(i), value: i });
+	}
+	return a;
+}
+const values = getMidiValues();
 const channels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
 const types = ['drum', 'melodic'];
+
 const SettingsMenu = ({ sequencer, dispatch, active }) => {
 	const { tracks } = sequencer;
 	return (
 		<Container className={active ? 'active' : ''}>
 			<Header>Settings</Header>
-			{sequencer.tracks.map((t) => (
-				<TrackSettings track={t} dispatch={dispatch} />
+			{sequencer.tracks.map((t, i) => (
+				<TrackSettings key={t.name} index={i} track={t} dispatch={dispatch} />
 			))}
 		</Container>
 	);
 };
 
-const TrackSettings = ({ track, dispatch }) => {
+const TrackSettings = ({ index, track, dispatch }) => {
 	const setChannel = (e) => {
-		dispatch({ type: 'setChannel', channel: e.target.value });
+		dispatch({ type: 'setChannel', channel: e.target.value, track: index });
 	};
 	const setValue = (e) => {
-		dispatch({ type: 'setValue', value: e.target.value });
+		dispatch({ type: 'setValue', value: e.target.value, track: index });
 	};
 	const setType = (e) => {
-		dispatch({ type: 'setType', type: e.target.value });
+		dispatch({ type: 'setType', type: e.target.value, track: index });
 	};
 	return (
 		<TrackContainer>
 			<TrackName>{track.name}</TrackName>
 			<TrackOptions>
+				<select onChange={setValue} value={track.note}>
+					{values.map((v) => (
+						<option value={v.value}>{v.title}</option>
+					))}
+				</select>
 				<select onChange={setChannel} value={track.channel}>
 					{channels.map((c) => (
 						<option value={c}>{c}</option>

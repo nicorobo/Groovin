@@ -87,6 +87,30 @@ export const reducer = (state, action) => {
 		case 'toggleInternalAudio':
 			newState = { ...state, useInternalAudio: !state.useInternalAudio };
 			break;
+		case 'setChannel':
+			newState = {
+				...state,
+				tracks: state.tracks.map((t, i) =>
+					i === action.track ? { ...t, channel: action.channel } : t
+				),
+			};
+			break;
+		case 'setValue':
+			newState = {
+				...state,
+				tracks: state.tracks.map((t, i) =>
+					i === action.track ? { ...t, note: action.value } : t
+				),
+			};
+			break;
+		case 'setType':
+			newState = {
+				...state,
+				tracks: state.tracks.map((t, i) =>
+					i === action.track ? { ...t, type: action.type } : t
+				),
+			};
+			break;
 		default:
 			break;
 	}

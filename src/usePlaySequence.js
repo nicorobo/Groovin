@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useMIDIClock, useInternalMIDIClock } from '@react-midi/hooks';
 import { useInternalAudio } from './useInternalAudio';
-const notes = [36, 37, 38, 39, 40, 41, 42, 43];
 
 const usePlaySequence = (input, output, sequencer, tempo = 115) => {
 	const { tracks, current, soloed } = sequencer;
@@ -13,7 +12,7 @@ const usePlaySequence = (input, output, sequencer, tempo = 115) => {
 		sequence.forEach((track, i) => {
 			const val = track[step];
 			if (val <= 0) return false;
-			noteOff(notes[i], val, 10);
+			noteOff(tracks[i].note, val, tracks[i].channel);
 		});
 	};
 	const notesOn = (step) => {
@@ -23,7 +22,7 @@ const usePlaySequence = (input, output, sequencer, tempo = 115) => {
 
 			if (val <= 0 || (tracks[i].muted && !isSoloed) || (soloed !== null && !isSoloed))
 				return false;
-			noteOn(notes[i], val, 10);
+			noteOn(tracks[i].note, val, tracks[i].channel);
 		});
 	};
 	useEffect(() => {
