@@ -2,30 +2,31 @@ import { useEffect, useRef } from 'react';
 import { useMIDIOutput } from '@react-midi/hooks';
 const notes = { 36: 0, 37: 1, 38: 2, 39: 3, 40: 4, 41: 5, 42: 6, 43: 7 };
 const samples = [
-	require('./sounds/drum1.wav'),
-	require('./sounds/drum2.wav'),
-	require('./sounds/drum3.wav'),
-	require('./sounds/drum4.wav'),
-	require('./sounds/drum5.wav'),
-	require('./sounds/drum6.wav'),
-	require('./sounds/drum7.wav'),
-	require('./sounds/drum8.wav'),
+	require('./sounds/drum1.mp3'),
+	require('./sounds/drum2.mp3'),
+	require('./sounds/drum3.mp3'),
+	require('./sounds/drum4.mp3'),
+	require('./sounds/drum5.mp3'),
+	require('./sounds/drum6.mp3'),
+	require('./sounds/drum7.mp3'),
+	require('./sounds/drum8.mp3'),
 ];
 
 export const useInternalAudio = (output, useInternalAudio) => {
 	const { noteOn, noteOff } = useMIDIOutput(output);
-	const audio = useRef();
+	const audio = useRef(new (window.AudioContext || window.webkitAudioContext)());
 	const sounds = useRef([]);
 	const nodes = useRef([]);
 	useEffect(() => {
-		audio.current = new (window.AudioContext || window.webkitAudioContext)();
 		samples.forEach((s, i) => {
 			fetch(s)
 				.then((res) => res.arrayBuffer())
-				.then((data) => audio.current.decodeAudioData(data))
-				.then((buffer) => {
-					sounds.current[i] = buffer; // Need to be explicit about order because fetch is async
-				});
+				.then((data) =>
+					audio.current.decodeAudioData(data, (buffer) => {
+						sounds.current[i] = buffer; // Need to be explicit about order because fetch is async
+					})
+				);
+			// .then();
 		});
 		nodes.current = samples.map((s) => {
 			const gain = audio.current.createGain();
