@@ -1,18 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import styled from 'styled-components';
 import SettingsMenu from './SettingsMenu';
 
-const Settings = ({ sequencer, dispatch }) => {
+const Settings = ({ tracks, tempo, useInternalAudio, dispatch }) => {
 	const [active, setActive] = useState(false);
 	const openMenu = () => setActive(true);
 	const closeMenu = () => setActive(false);
+
+	console.log('rendering settings');
 	return (
 		<Container>
 			<MenuButton
 				className={'menu-btn fa fa-gear ' + (active ? 'active' : '')}
 				onClick={active ? closeMenu : openMenu}
 			/>
-			<SettingsMenu sequencer={sequencer} dispatch={dispatch} active={active} />
+			<SettingsMenu
+				tracks={tracks}
+				tempo={tempo}
+				useInternalAudio={useInternalAudio}
+				dispatch={dispatch}
+				active={active}
+			/>
 		</Container>
 	);
 };
@@ -35,4 +43,4 @@ const MenuButton = styled.i`
 	}
 `;
 
-export default Settings;
+export default memo(Settings);

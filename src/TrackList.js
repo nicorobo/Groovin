@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components';
 import TrackItem from './TrackItem';
 
-const TrackList = ({ output, sequencer, dispatch }) => {
-	const { activeTrack, soloed, tracks } = sequencer;
+const TrackList = ({ output, activeTrack, soloed, tracks, dispatch }) => {
+	console.log('rendering tracklist');
 	const handleClear = () => {
 		dispatch({ type: 'clearAll' });
 	};
@@ -33,4 +33,4 @@ const Container = styled.div`
 	padding: 0 1rem;
 `;
 
-export default TrackList;
+export default memo(TrackList);

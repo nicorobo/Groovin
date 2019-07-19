@@ -12,8 +12,7 @@ function getMidiValues() {
 const values = getMidiValues();
 const channels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
 
-const SettingsMenu = ({ sequencer, dispatch, active }) => {
-	const { tracks, tempo, useInternalAudio } = sequencer;
+const SettingsMenu = ({ tracks, tempo, useInternalAudio, dispatch, active }) => {
 	const handleToggleInternalAudio = () => {
 		dispatch({ type: 'toggleInternalAudio' });
 	};

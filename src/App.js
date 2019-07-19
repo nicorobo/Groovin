@@ -12,6 +12,7 @@ const App = () => {
 	const [input, setInput] = useMIDIConnectionManager(inputs);
 	const [output, setOutput] = useMIDIConnectionManager(outputs);
 	const [sequencer, dispatch] = useReducer(reducer, initialState);
+	const { activeTrack, soloed, tracks, tempo, useInternalAudio } = sequencer;
 	return (
 		<Container>
 			{hasMIDI && (
@@ -24,9 +25,20 @@ const App = () => {
 					onOutputChange={setOutput}
 				/>
 			)}
-			<TrackList output={output} sequencer={sequencer} dispatch={dispatch} />
+			<TrackList
+				output={output}
+				activeTrack={activeTrack}
+				soloed={soloed}
+				tracks={tracks}
+				dispatch={dispatch}
+			/>
 			<Sequencer input={input} output={output} sequencer={sequencer} dispatch={dispatch} />
-			<Settings sequencer={sequencer} dispatch={dispatch} />
+			<Settings
+				tracks={tracks}
+				tempo={tempo}
+				useInternalAudio={useInternalAudio}
+				dispatch={dispatch}
+			/>
 		</Container>
 	);
 };
