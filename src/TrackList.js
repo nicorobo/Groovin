@@ -11,6 +11,7 @@ const TrackList = ({ output, sequencer, dispatch }) => {
 		<Container>
 			{tracks.map((t, i) => (
 				<TrackItem
+					key={i}
 					output={output}
 					track={t}
 					index={i}

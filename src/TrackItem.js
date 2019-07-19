@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import { lighten } from 'polished';
-import { useInternalAudio } from './useInternalAudio';
+// import { useAudio } from './useAudio';
 
 const TrackItem = ({ output, track, index, active, soloed, dispatch }) => {
-	const { noteOn, noteOff } = useInternalAudio(output);
+	// const { noteOn, noteOff } = useAudio(output);
 	const handleButtonClick = () => {
-		noteOn(track.note, 100, track.channel);
-		setTimeout(() => noteOff(track.note, 100, track.channel), 500);
+		// noteOn(track.note, 100, track.channel);
+		// setTimeout(() => noteOff(track.note, 100, track.channel), 500);
 	};
 	const handleNameClick = () => {
 		dispatch({ type: 'selectTrack', track: index });

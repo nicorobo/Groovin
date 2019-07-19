@@ -58,12 +58,16 @@ const TrackSettings = ({ index, track, dispatch }) => {
 			<TrackOptions>
 				<select onChange={setValue} value={track.note}>
 					{values.map((v) => (
-						<option value={v.value}>{v.title}</option>
+						<option key={v.value} value={v.value}>
+							{v.title}
+						</option>
 					))}
 				</select>
 				<select onChange={setChannel} value={track.channel}>
 					{channels.map((c) => (
-						<option value={c}>{c}</option>
+						<option key={c} value={c}>
+							{c}
+						</option>
 					))}
 				</select>
 			</TrackOptions>
