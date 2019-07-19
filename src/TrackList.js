@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import TrackItem from './TrackItem';
 
 const TrackList = ({ output, sequencer, dispatch }) => {
-	const { activeTrack, soloed, tracks, useInternalAudio } = sequencer;
+	const { activeTrack, soloed, tracks } = sequencer;
 	const handleClear = () => {
 		dispatch({ type: 'clearAll' });
 	};

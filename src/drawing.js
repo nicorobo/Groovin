@@ -31,21 +31,9 @@ export const useRing = (node, index, activeIndex, data, track, dispatch) => {
 	const contentRing = useRef(null);
 	const outlineRing = useRef(null);
 	const [edit, setEdit] = useState(false);
-	const [outer, inner] = getRadii(index, activeIndex);
-	const getArc = arc()
-		.innerRadius(inner)
-		.outerRadius(outer);
+	const [outer, inner] = useMemo(() => getRadii(index, activeIndex), [index, activeIndex]);
 
-	const getPathFromArc = arc() // maybe memoize callback to outer/inner/activeIndex
-		.innerRadius(inner)
-		.outerRadius((d) =>
-			index === activeIndex
-				? inner + ((outer - inner) / 127) * d.data
-				: d.data > 0
-				? outer
-				: inner
-		);
-
+	// Maybe move the event handlers to their appropriate effects so the function isn't created every time
 	const handleMousedown = (a, b) => {
 		if (activeIndex === index) setEdit(true);
 	};
@@ -96,6 +84,18 @@ export const useRing = (node, index, activeIndex, data, track, dispatch) => {
 
 	useEffect(() => {
 		if (node) {
+			const getArc = arc()
+				.innerRadius(inner)
+				.outerRadius(outer);
+			const getPathFromArc = arc()
+				.innerRadius(inner)
+				.outerRadius((d) =>
+					index === activeIndex
+						? inner + ((outer - inner) / 127) * d.data
+						: d.data > 0
+						? outer
+						: inner
+				);
 			contentRing.current
 				.selectAll('path')
 				.data(arcs)
