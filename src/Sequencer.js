@@ -35,12 +35,24 @@ const Sequencer = ({ input, output, sequencer, dispatch }) => {
 };
 
 const Rings = memo(({ svg, tracks, activeTrack, sequence, dispatch }) => {
-	// console.log('rendering rings!');
-	for (var i = 0; i < tracks.length; i++) {
-		useRing(svg, i, activeTrack, sequence[i], tracks[i], dispatch);
-	}
+	const arr = [0, 1, 2, 3, 4, 5, 6, 7];
+	return arr.map((i) => (
+		<Ring
+			svg={svg}
+			index={i}
+			activeTrack={activeTrack}
+			sequence={sequence[i]}
+			track={tracks[i]}
+			dispatch={dispatch}
+		/>
+	));
+});
+const Ring = memo(({ svg, index, activeTrack, sequence, track, dispatch }) => {
+	useRing(svg, index, activeTrack, sequence, track, dispatch);
 	return null;
 });
+
+// Rings.whyDidYouRender = true;
 
 const Transport = ({ svg, isPlaying, setIsPlaying }) => {
 	useTransport(svg, isPlaying, setIsPlaying);

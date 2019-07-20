@@ -33,9 +33,8 @@ export const useRing = (node, index, activeIndex, data, track, dispatch) => {
 	const [stepData, setStepData] = useState(0);
 	const [stepIndex, setStepIndex] = useState(null);
 	const d = edit ? data.map((d, i) => (i === stepIndex ? stepData : d)) : data;
-	const arcs = useMemo(() => pie().value(1)(d), [data, stepData]);
+	const arcs = useMemo(() => pie().value(1)(d), [d]);
 	const [outer, inner] = useMemo(() => getRadii(index, activeIndex), [index, activeIndex]);
-
 	// Maybe move the event handlers to their appropriate effects so the function isn't created every time
 	const handleMousedown = (a, b) => {
 		if (activeIndex === index) setEdit(true);
@@ -63,7 +62,6 @@ export const useRing = (node, index, activeIndex, data, track, dispatch) => {
 		setStepIndex(null);
 		dispatch({ type: 'updateValue', track: index, step: stepIndex, value: stepData });
 	};
-
 	useEffect(() => {
 		if (edit) {
 			select('html').on('mousemove', handleMousemove);
