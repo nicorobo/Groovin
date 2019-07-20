@@ -66,11 +66,15 @@ export const useRing = (node, index, activeIndex, data, track, dispatch) => {
 	useEffect(() => {
 		if (edit) {
 			select('html').on('mousemove', handleMousemove);
+			select('html').on('touchmove', handleMousemove);
 			select('html').on('mouseup', handleMouseup);
+			select('html').on('touchend', handleMouseup);
 		}
 		return () => {
 			select('html').on('mousemove', null);
 			select('html').on('mouseup', null);
+			select('html').on('touchmove', null);
+			select('html').on('touchend', null);
 		};
 	}, [edit, stepIndex, d]);
 
@@ -117,6 +121,7 @@ export const useRing = (node, index, activeIndex, data, track, dispatch) => {
 
 			outlineRing.current
 				.on('mousedown', handleMousedown)
+				.on('touchstart', handleMousedown)
 				.selectAll('path')
 				.data(arcs)
 				.join('path')
@@ -146,7 +151,6 @@ export const useStepMarker = (node, step, isPlaying, data, color) => {
 				.join('path')
 				.attr('fill', (d, i) => (i === step && isPlaying ? color : 'transparent'))
 				.attr('d', getArc)
-				// .attr('stroke', (d, i) => (i === step ? '#333' : 'none'))
 				.style('pointer-events', 'none');
 			return () => f.remove();
 		}
