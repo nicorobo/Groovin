@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import styled from 'styled-components';
 import usePlaySequence from './usePlaySequence';
 import { useRing, useStepMarker, useTransport } from './drawing';
@@ -11,16 +11,45 @@ const Sequencer = ({ input, output, sequencer, dispatch }) => {
 	const sequence = current.sequence;
 	const [svg, setSvg] = useState(null);
 	const [step, isPlaying, setIsPlaying] = usePlaySequence(input, output, sequencer);
-	for (var i = 0; i < tracks.length; i++) {
-		useRing(svg, i, activeTrack, sequence[i], tracks[i], dispatch);
-	}
-	useStepMarker(svg, step, isPlaying, sequence[0], tracks[activeTrack].color);
-	useTransport(svg, isPlaying, setIsPlaying);
+	// console.log('rendering everything!');
 	return (
 		<Container>
 			<svg ref={setSvg} height={height} width={width} />
+			<Rings
+				svg={svg}
+				tracks={tracks}
+				activeTrack={activeTrack}
+				sequence={sequence}
+				dispatch={dispatch}
+			/>
+			<Transport svg={svg} isPlaying={isPlaying} setIsPlaying={setIsPlaying} />
+			<StepMarker
+				svg={svg}
+				step={step}
+				isPlaying={isPlaying}
+				data={sequence[0]}
+				color={tracks[activeTrack].color}
+			/>
 		</Container>
 	);
+};
+
+const Rings = memo(({ svg, tracks, activeTrack, sequence, dispatch }) => {
+	// console.log('rendering rings!');
+	for (var i = 0; i < tracks.length; i++) {
+		useRing(svg, i, activeTrack, sequence[i], tracks[i], dispatch);
+	}
+	return null;
+});
+
+const Transport = ({ svg, isPlaying, setIsPlaying }) => {
+	useTransport(svg, isPlaying, setIsPlaying);
+	return null;
+};
+
+const StepMarker = ({ svg, step, isPlaying, data, color }) => {
+	useStepMarker(svg, step, isPlaying, data, color);
+	return null;
 };
 
 const Container = styled.div`

@@ -107,12 +107,11 @@ export const initialState = loadState() || {
 
 export const reducer = (state, action) => {
 	let newState = state;
-	// silly solution to variables not being able to be defined twice in a switch statement
 	let sequence = null;
-
 	switch (action.type) {
 		case 'updateValue':
 			const { track, step, value } = action;
+			console.log('updating value');
 			// If value isn't changing, don't rerender
 			if (state.current.sequence[track][step] === value) return state;
 			sequence = state.current.sequence.map((r, i) =>

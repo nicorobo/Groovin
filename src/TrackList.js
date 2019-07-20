@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import TrackItem from './TrackItem';
 
 const TrackList = ({ output, activeTrack, soloed, tracks, dispatch }) => {
-	console.log('rendering tracklist');
 	const handleClear = () => {
 		dispatch({ type: 'clearAll' });
 	};

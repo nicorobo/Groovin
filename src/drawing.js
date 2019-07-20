@@ -27,10 +27,13 @@ const getValue = (dist, inner, outer) => {
 };
 
 export const useRing = (node, index, activeIndex, data, track, dispatch) => {
-	const arcs = useMemo(() => pie().value(1)(data), [data]);
 	const contentRing = useRef(null);
 	const outlineRing = useRef(null);
 	const [edit, setEdit] = useState(false);
+	const [stepData, setStepData] = useState(0);
+	const [stepIndex, setStepIndex] = useState(null);
+	const d = edit ? data.map((d, i) => (i === stepIndex ? stepData : d)) : data;
+	const arcs = useMemo(() => pie().value(1)(d), [data, stepData]);
 	const [outer, inner] = useMemo(() => getRadii(index, activeIndex), [index, activeIndex]);
 
 	// Maybe move the event handlers to their appropriate effects so the function isn't created every time
@@ -46,11 +49,19 @@ export const useRing = (node, index, activeIndex, data, track, dispatch) => {
 		const realAngle = angle > 0 ? angle : 2 * Math.PI + angle;
 		const selected = arcs.find((a) => a.startAngle <= realAngle && realAngle <= a.endAngle);
 		const value = getValue(distance, inner, outer);
-		dispatch({ type: 'updateValue', track: index, step: selected.index, value });
+		if (stepIndex === null || stepIndex !== selected.index) {
+			if (stepIndex !== null) {
+				dispatch({ type: 'updateValue', track: index, step: stepIndex, value: stepData });
+			}
+			setStepIndex(selected.index);
+		}
+		setStepData(value);
 	};
 
 	const handleMouseup = (e) => {
 		setEdit(false);
+		setStepIndex(null);
+		dispatch({ type: 'updateValue', track: index, step: stepIndex, value: stepData });
 	};
 
 	useEffect(() => {
@@ -62,7 +73,7 @@ export const useRing = (node, index, activeIndex, data, track, dispatch) => {
 			select('html').on('mousemove', null);
 			select('html').on('mouseup', null);
 		};
-	}, [edit]);
+	}, [edit, stepIndex, d]);
 
 	useEffect(() => {
 		if (node) {
@@ -118,7 +129,7 @@ export const useRing = (node, index, activeIndex, data, track, dispatch) => {
 				.attr('duration', 500)
 				.attr('d', getArc);
 		}
-	}, [node, activeIndex, data]);
+	}, [node, activeIndex, d]);
 };
 
 export const useStepMarker = (node, step, isPlaying, data, color) => {
