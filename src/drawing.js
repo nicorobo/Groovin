@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef, useMemo } from 'react';
 import { select, pie, arc, mouse } from 'd3';
+import Tone from 'tone';
 const width = 520;
 const height = 520;
 
@@ -171,7 +172,10 @@ export const useTransport = (node, isPlaying, setIsPlaying) => {
 				f.append('polygon')
 					.attr('points', '26.5 5 58 58 -5 58')
 					.attr('transform', 'rotate(90.000000) translate(-26.500000, -40.500000)')
-					.on('click', () => setIsPlaying(true));
+					.on('click', () => {
+						Tone.context.resume();
+						setIsPlaying(true);
+					});
 			}
 			return () => f.remove();
 		}
