@@ -27,10 +27,10 @@ const TrackItem = ({ output, track, index, active, soloed, dispatch }) => {
 			<Info>
 				<Name onClick={handleNameClick}>{track.name}</Name>
 				<Clear onClick={handleClearTrack}>C</Clear>
-				<Mute active={track.muted} onClick={handleMuteTrack}>
+				<Mute color={track.color} active={track.muted} onClick={handleMuteTrack}>
 					M
 				</Mute>
-				<Solo active={soloed} onClick={handleSoloTrack}>
+				<Solo color={track.color} active={soloed} onClick={handleSoloTrack}>
 					S
 				</Solo>
 			</Info>
@@ -43,6 +43,9 @@ const Container = styled.div`
 	align-items: center;
 	color: #333;
 	margin-bottom: 1rem;
+	button {
+		outline: none;
+	}
 `;
 const Button = styled.div`
 	height: 30px;
@@ -62,24 +65,45 @@ const Info = styled.div``;
 const Name = styled.div`
 	font-size: 0.85rem;
 	cursor: pointer;
-	margin-bottom: 0.2rem;
+	margin-bottom: 0.3rem;
 `;
 const Clear = styled.button`
 	font-size: 0.75rem;
 	cursor: pointer;
-	margin-right: 0.2rem;
+	margin-right: 0.5rem;
+	border: 1px solid #eee;
+	border-radius: 5px;
+	width: 1.8rem;
+	&:hover {
+		background: #eee;
+	}
 `;
 const Mute = styled.button`
 	font-size: 0.75rem;
+	border: 1px solid;
+	border-color: ${(props) => (props.active ? props.color : '#eee')};
+	border-radius: 5px 0 0 5px;
+	color: ${(props) => (props.active ? '#fff' : '')};
+	width: 1.8rem;
 	cursor: pointer;
-	margin-right: 0.2rem;
-	background-color: ${(props) => (props.active ? 'red' : '')};
+	background-color: ${(props) => (props.active ? props.color : '#fff')};
+	&:hover {
+		background: ${(props) => (props.active ? '' : '#eee')};
+	}
 `;
 const Solo = styled.button`
 	font-size: 0.75rem;
 	cursor: pointer;
-	margin-right: 0.2rem;
-	background-color: ${(props) => (props.active ? 'blue' : '')};
+	border: 1px solid;
+	border-color: ${(props) => (props.active ? lighten(0.05, props.color) : '#eee')};
+	border-radius: 0 5px 5px 0;
+	color: ${(props) => (props.active ? '#fff' : '')};
+	margin-left: -1px;
+	width: 1.8rem;
+	background-color: ${(props) => (props.active ? lighten(0.05, props.color) : '#fff')};
+	&:hover {
+		background: ${(props) => (props.active ? '' : '#eee')};
+	}
 `;
 
 export default TrackItem;

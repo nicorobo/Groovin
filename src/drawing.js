@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef, useMemo } from 'react';
-import { select, pie, arc, mouse } from 'd3';
+import { select, pie, arc, mouse, event } from 'd3';
 import Tone from 'tone';
 const width = 520;
 const height = 520;
@@ -42,6 +42,7 @@ export const useRing = (node, index, activeIndex, data, track, dispatch) => {
 	};
 
 	const handleMousemove = (e) => {
+		event.preventDefault();
 		const pos = mouse(node);
 		const center = [width / 2, height / 2];
 		const distance = getDistance(pos, center);
