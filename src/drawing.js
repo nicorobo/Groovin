@@ -65,13 +65,14 @@ export const useRing = (node, index, activeIndex, data, track, dispatch) => {
 	};
 	useEffect(() => {
 		if (edit) {
-			document.body.style.overflow = 'hidden';
+			select('body').classed('noscroll', true);
 			select('html').on('mousemove', handleMousemove, false);
 			select('html').on('touchmove', handleMousemove, false);
 			select('html').on('mouseup', handleMouseup, false);
 			select('html').on('touchend', handleMouseup, false);
 		}
 		return () => {
+			select('body').classed('noscroll', false);
 			select('html').on('mousemove', null);
 			select('html').on('mouseup', null);
 			select('html').on('touchmove', null);

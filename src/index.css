@@ -8,3 +8,7 @@ body {
 	font-family: Avenir, Helvetica, Arial, sans-serif;
 	color: #333;
 }
+
+.noscroll {
+	touch-action: none;
+}

@@ -37,6 +37,7 @@ const Rings = memo(({ svg, tracks, activeTrack, sequence, dispatch }) => {
 	const arr = [0, 1, 2, 3, 4, 5, 6, 7];
 	return arr.map((i) => (
 		<Ring
+			key={i}
 			svg={svg}
 			index={i}
 			activeTrack={activeTrack}
