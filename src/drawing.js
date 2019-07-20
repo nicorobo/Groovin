@@ -65,6 +65,7 @@ export const useRing = (node, index, activeIndex, data, track, dispatch) => {
 	};
 	useEffect(() => {
 		if (edit) {
+			document.body.style.overflow = 'hidden';
 			select('html').on('mousemove', handleMousemove, false);
 			select('html').on('touchmove', handleMousemove, false);
 			select('html').on('mouseup', handleMouseup, false);
@@ -75,6 +76,7 @@ export const useRing = (node, index, activeIndex, data, track, dispatch) => {
 			select('html').on('mouseup', null);
 			select('html').on('touchmove', null);
 			select('html').on('touchend', null);
+			document.body.style.overflow = '';
 		};
 	}, [edit, stepIndex, d]);
 
