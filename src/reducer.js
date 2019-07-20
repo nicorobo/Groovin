@@ -111,7 +111,6 @@ export const reducer = (state, action) => {
 	switch (action.type) {
 		case 'updateValue':
 			const { track, step, value } = action;
-			console.log('updating value');
 			// If value isn't changing, don't rerender
 			if (state.current.sequence[track][step] === value) return state;
 			sequence = state.current.sequence.map((r, i) =>

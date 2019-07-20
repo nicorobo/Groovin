@@ -6,10 +6,6 @@ import { reducer, initialState } from './reducer';
 import TrackList from './TrackList';
 import Sequencer from './Sequencer';
 import Settings from './Settings';
-if (process.env.NODE_ENV !== 'production') {
-	const whyDidYouRender = require('@welldone-software/why-did-you-render');
-	whyDidYouRender(React);
-}
 
 const App = () => {
 	const [inputs, outputs, hasMIDI] = useMIDI();

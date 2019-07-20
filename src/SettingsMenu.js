@@ -31,7 +31,6 @@ const SettingsMenu = ({ tracks, tempo, useInternalAudio, dispatch, active }) => 
 };
 
 const TempoSettings = ({ tempo, dispatch }) => {
-	const setTempo = (e) => dispatch({ type: 'setTempo', tempo: e.target.value });
 	const increment = (e) => dispatch({ type: 'setTempo', tempo: parseInt(tempo) + 1 });
 	const decrement = (e) => dispatch({ type: 'setTempo', tempo: parseInt(tempo) - 1 });
 	return (

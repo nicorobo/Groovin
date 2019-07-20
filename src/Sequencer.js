@@ -11,7 +11,6 @@ const Sequencer = ({ input, output, sequencer, dispatch }) => {
 	const sequence = current.sequence;
 	const [svg, setSvg] = useState(null);
 	const [step, isPlaying, setIsPlaying] = usePlaySequence(input, output, sequencer);
-	// console.log('rendering everything!');
 	return (
 		<Container>
 			<svg ref={setSvg} height={height} width={width} />
@@ -51,8 +50,6 @@ const Ring = memo(({ svg, index, activeTrack, sequence, track, dispatch }) => {
 	useRing(svg, index, activeTrack, sequence, track, dispatch);
 	return null;
 });
-
-// Rings.whyDidYouRender = true;
 
 const Transport = ({ svg, isPlaying, setIsPlaying }) => {
 	useTransport(svg, isPlaying, setIsPlaying);

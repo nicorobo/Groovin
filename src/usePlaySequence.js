@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { useMIDIClock, useInternalMIDIClock } from '@react-midi/hooks';
 import { useAudio } from './useAudio';
 
@@ -29,6 +29,7 @@ const usePlaySequence = (input, output, sequencer) => {
 		if (isPlaying) notesOn(currentStep);
 		return () => notesOff(currentStep);
 	}, [step, isPlaying]);
+
 	return [currentStep, isPlaying, setIsPlaying, setTempo];
 };
 
