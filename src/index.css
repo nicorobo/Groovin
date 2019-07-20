@@ -11,4 +11,5 @@ body {
 
 .noscroll {
 	touch-action: none;
+	overflow: hidden;
 }
