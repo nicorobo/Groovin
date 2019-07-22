@@ -6,11 +6,17 @@ import { useRing, useStepMarker, useTransport } from './drawing';
 const width = 520;
 const height = 520;
 
-const Sequencer = ({ input, output, sequencer, dispatch }) => {
+const Sequencer = ({ input, output, sequencer, noteOn, noteOff, dispatch }) => {
 	const { tracks, current, activeTrack } = sequencer;
 	const sequence = current.sequence;
 	const [svg, setSvg] = useState(null);
-	const [step, isPlaying, setIsPlaying] = usePlaySequence(input, output, sequencer);
+	const [step, isPlaying, setIsPlaying] = usePlaySequence(
+		input,
+		output,
+		sequencer,
+		noteOn,
+		noteOff
+	);
 	return (
 		<Container>
 			<svg ref={setSvg} height={height} width={width} />

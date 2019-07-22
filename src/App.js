@@ -6,12 +6,14 @@ import { reducer, initialState } from './reducer';
 import TrackList from './TrackList';
 import Sequencer from './Sequencer';
 import Settings from './Settings';
+import { useAudio } from './useAudio';
 
 const App = () => {
 	const [inputs, outputs, hasMIDI] = useMIDI();
 	const [input, setInput] = useMIDIConnectionManager(inputs);
 	const [output, setOutput] = useMIDIConnectionManager(outputs);
 	const [sequencer, dispatch] = useReducer(reducer, initialState);
+	const { noteOn, noteOff } = useAudio(output, sequencer);
 	const { activeTrack, soloed, tracks, tempo, useInternalAudio } = sequencer;
 	return (
 		<Container>
@@ -30,9 +32,18 @@ const App = () => {
 				activeTrack={activeTrack}
 				soloed={soloed}
 				tracks={tracks}
+				noteOn={noteOn}
+				noteOff={noteOff}
 				dispatch={dispatch}
 			/>
-			<Sequencer input={input} output={output} sequencer={sequencer} dispatch={dispatch} />
+			<Sequencer
+				input={input}
+				output={output}
+				noteOn={noteOn}
+				noteOff={noteOff}
+				sequencer={sequencer}
+				dispatch={dispatch}
+			/>
 			<Settings
 				tracks={tracks}
 				tempo={tempo}

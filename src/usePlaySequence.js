@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react';
 import { useMIDIClock, useInternalMIDIClock } from '@react-midi/hooks';
 import { useAudio } from './useAudio';
 
-const usePlaySequence = (input, output, sequencer) => {
+const usePlaySequence = (input, output, sequencer, noteOn, noteOff) => {
 	const { tracks, tempo, current, soloed } = sequencer;
 	const sequence = current.sequence;
-	const { noteOn, noteOff } = useAudio(output, sequencer);
+	// const { noteOn, noteOff } = useAudio(output, sequencer);
 	const [step, isPlaying, setIsPlaying, setTempo] = useTwoWayClock(input, output, 6, tempo);
 	const currentStep = step % sequence[0].length;
 	const notesOff = (step) => {

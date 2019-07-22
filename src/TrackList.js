@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import TrackItem from './TrackItem';
 import { lighten } from 'polished';
 
-const TrackList = ({ output, activeTrack, soloed, tracks, dispatch }) => {
+const TrackList = ({ output, activeTrack, soloed, tracks, noteOn, noteOff, dispatch }) => {
 	const handleClear = () => {
 		dispatch({ type: 'clearAll' });
 	};
@@ -12,12 +12,13 @@ const TrackList = ({ output, activeTrack, soloed, tracks, dispatch }) => {
 			{tracks.map((t, i) => (
 				<TrackItem
 					key={i}
-					output={output}
 					track={t}
 					index={i}
 					active={activeTrack === i}
 					soloed={soloed === i}
 					dispatch={dispatch}
+					noteOn={noteOn}
+					noteOff={noteOff}
 				/>
 			))}
 			<ClearAll onClick={handleClear}>Clear All</ClearAll>

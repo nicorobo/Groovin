@@ -1,13 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import { lighten } from 'polished';
-// import { useAudio } from './useAudio';
 
-const TrackItem = ({ output, track, index, active, soloed, dispatch }) => {
-	// const { noteOn, noteOff } = useAudio(output);
+const TrackItem = ({ track, index, active, soloed, noteOn, noteOff, dispatch }) => {
 	const handleButtonClick = () => {
-		// noteOn(track.note, 100, track.channel);
-		// setTimeout(() => noteOff(track.note, 100, track.channel), 500);
+		noteOn(track.note, 100, track.channel);
+		setTimeout(() => noteOff(track.note, 100, track.channel), 500);
 	};
 	const handleNameClick = () => {
 		dispatch({ type: 'selectTrack', track: index });
@@ -23,7 +21,7 @@ const TrackItem = ({ output, track, index, active, soloed, dispatch }) => {
 	};
 	return (
 		<Container>
-			<Button color={track.color} onClick={handleButtonClick} />
+			<Button color={track.color} onMouseDown={handleButtonClick} />
 			<Info>
 				<Name active={active} onClick={handleNameClick}>
 					{track.name}
