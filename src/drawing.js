@@ -3,9 +3,6 @@ import { select, pie, arc, mouse, event } from 'd3';
 import Tone from 'tone';
 const width = 520;
 const height = 520;
-const bodyScrollLock = require('body-scroll-lock');
-const disableBodyScroll = bodyScrollLock.disableBodyScroll;
-const enableBodyScroll = bodyScrollLock.enableBodyScroll;
 
 const getRadii = (index, activeIndex) => {
 	const mainRadius = 250;
@@ -69,14 +66,12 @@ export const useRing = (node, index, activeIndex, data, track, dispatch) => {
 	};
 	useEffect(() => {
 		if (edit) {
-			disableBodyScroll(node);
 			select('html').on('mousemove', handleMousemove, false);
 			select('html').on('touchmove', handleMousemove, false);
 			select('html').on('mouseup', handleMouseup, false);
 			select('html').on('touchend', handleMouseup, false);
 		}
 		return () => {
-			enableBodyScroll(node);
 			select('html').on('mousemove', null);
 			select('html').on('mouseup', null);
 			select('html').on('touchmove', null);

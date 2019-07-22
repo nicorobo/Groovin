@@ -25,7 +25,9 @@ const TrackItem = ({ output, track, index, active, soloed, dispatch }) => {
 		<Container>
 			<Button color={track.color} onClick={handleButtonClick} />
 			<Info>
-				<Name onClick={handleNameClick}>{track.name}</Name>
+				<Name active={active} onClick={handleNameClick}>
+					{track.name}
+				</Name>
 				<Clear onClick={handleClearTrack}>C</Clear>
 				<Mute color={track.color} active={track.muted} onClick={handleMuteTrack}>
 					M
@@ -66,6 +68,7 @@ const Name = styled.div`
 	font-size: 0.85rem;
 	cursor: pointer;
 	margin-bottom: 0.3rem;
+	font-weight: ${(props) => (props.active ? 'bold' : '')};
 `;
 const Clear = styled.button`
 	font-size: 0.75rem;
