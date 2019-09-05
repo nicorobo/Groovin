@@ -19,6 +19,15 @@ const getInitialSequence = (layers, steps) => {
 	return sequence;
 };
 
+const nudge = (array, direction) => {
+	if (direction === 'right') {
+		return [...array.slice(-1), ...array.slice(0, -1)];
+	} else if (direction === 'left') {
+		return [...array.slice(1), array[0]];
+	}
+	return array;
+};
+
 export const initialState = loadState() || {
 	tracks: [
 		{
@@ -108,7 +117,6 @@ export const initialState = loadState() || {
 export const reducer = (state, action) => {
 	let newState = state;
 	let sequence = null;
-	console.log('HEYEYEYE: ', action);
 	switch (action.type) {
 		case 'updateValue':
 			const { track, step, value } = action;
@@ -177,6 +185,18 @@ export const reducer = (state, action) => {
 					i === action.track ? { ...t, type: action.trackType } : t
 				),
 			};
+			break;
+		case 'nudgeTrack':
+			sequence = state.current.sequence.map((t, i) =>
+				i === action.track ? nudge(t, action.direction) : t
+			);
+			newState = { ...state, current: { ...state.current, sequence } };
+			break;
+		case 'flipTrack':
+			sequence = state.current.sequence.map((t, i) =>
+				i === action.track ? t.slice().reverse() : t
+			);
+			newState = { ...state, current: { ...state.current, sequence } };
 			break;
 		default:
 			break;

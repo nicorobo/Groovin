@@ -71,7 +71,7 @@ const TrackItem = ({ track, index, active, soloed, noteOn, noteOff, dispatch }) 
 						</Button>
 					</Row>
 				)}
-				{active && (
+				{false && (
 					<Row>
 						<Button
 							color={track.color}
