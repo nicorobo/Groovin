@@ -108,6 +108,7 @@ export const initialState = loadState() || {
 export const reducer = (state, action) => {
 	let newState = state;
 	let sequence = null;
+	console.log('HEYEYEYE: ', action);
 	switch (action.type) {
 		case 'updateValue':
 			const { track, step, value } = action;
@@ -173,7 +174,7 @@ export const reducer = (state, action) => {
 			newState = {
 				...state,
 				tracks: state.tracks.map((t, i) =>
-					i === action.track ? { ...t, type: action.type } : t
+					i === action.track ? { ...t, type: action.trackType } : t
 				),
 			};
 			break;

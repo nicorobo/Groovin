@@ -19,21 +19,77 @@ const TrackItem = ({ track, index, active, soloed, noteOn, noteOff, dispatch }) 
 	const handleSoloTrack = () => {
 		dispatch({ type: 'soloTrack', track: index });
 	};
+	const handleSetToDrum = () => {
+		dispatch({ type: 'setType', track: index, trackType: 'drum' });
+	};
+	const handleSetToMelodic = () => {
+		dispatch({ type: 'setType', track: index, trackType: 'melodic' });
+	};
+	const handleNudgeLeft = () => {
+		dispatch({ type: 'nudgeTrack', track: index, direction: 'left' });
+	};
+	const handleNudgeRight = () => {
+		dispatch({ type: 'nudgeTrack', track: index, direction: 'right' });
+	};
+	const handleFlip = () => {
+		dispatch({ type: 'flipTrack', track: index });
+	};
 	return (
 		<Container>
-			<Button color={track.color} onMouseDown={handleButtonClick} />
-			<Info>
+			<Trigger color={track.color} onMouseDown={handleButtonClick} />
+			<Settings>
 				<Name active={active} onClick={handleNameClick}>
 					{track.name}
 				</Name>
-				<Clear onClick={handleClearTrack}>C</Clear>
-				<Mute color={track.color} active={track.muted} onClick={handleMuteTrack}>
-					M
-				</Mute>
-				<Solo color={track.color} active={soloed} onClick={handleSoloTrack}>
-					S
-				</Solo>
-			</Info>
+				<Row>
+					<Clear onClick={handleClearTrack}>C</Clear>
+					<Button
+						color={track.color}
+						active={track.muted}
+						side={'left'}
+						onClick={handleMuteTrack}>
+						M
+					</Button>
+					<Button
+						color={track.color}
+						active={soloed}
+						side={'right'}
+						onClick={handleSoloTrack}>
+						S
+					</Button>
+				</Row>
+				{active && (
+					<Row>
+						<Button color={track.color} side={'left'} onClick={handleNudgeLeft}>
+							Left
+						</Button>
+						<Button color={track.color} side={'middle'} onClick={handleFlip}>
+							Flip
+						</Button>
+						<Button color={track.color} side={'right'} onClick={handleNudgeRight}>
+							Right
+						</Button>
+					</Row>
+				)}
+				{active && (
+					<Row>
+						<Button
+							color={track.color}
+							side={'left'}
+							active={track.type === 'drum'}
+							onClick={handleSetToDrum}>
+							Drum
+						</Button>
+						<Button
+							color={track.color}
+							side={'right'}
+							active={track.type === 'melodic'}
+							onClick={handleSetToMelodic}>
+							Melodic
+						</Button>
+					</Row>
+				)}
+			</Settings>
 		</Container>
 	);
 };
@@ -47,7 +103,7 @@ const Container = styled.div`
 		outline: none;
 	}
 `;
-const Button = styled.div`
+const Trigger = styled.div`
 	height: 30px;
 	width: 30px;
 	cursor: pointer;
@@ -61,50 +117,37 @@ const Button = styled.div`
 		background: ${(props) => props.color};
 	}
 `;
-const Info = styled.div``;
+const Settings = styled.div``;
+const Row = styled.div`
+	margin-bottom: 0.25rem;
+`;
 const Name = styled.div`
 	font-size: 0.85rem;
 	cursor: pointer;
 	margin-bottom: 0.3rem;
 	font-weight: ${(props) => (props.active ? 'bold' : '')};
 `;
-const Clear = styled.button`
-	font-size: 0.75rem;
-	cursor: pointer;
-	margin-right: 0.5rem;
-	border: 1px solid #eee;
-	border-radius: 5px;
-	width: 1.8rem;
-	&:hover {
-		background: #eee;
-	}
-`;
-const Mute = styled.button`
+
+const Button = styled.button`
 	font-size: 0.75rem;
 	border: 1px solid;
 	border-color: ${(props) => (props.active ? props.color : '#eee')};
-	border-radius: 5px 0 0 5px;
+	border-radius: ${(props) => {
+		if (props.side === 'right') return '0 5px 5px 0';
+		else if (props.side === 'left') return '5px 0 0 5px';
+		else if (props.side === 'middle') return '0';
+		else return '5px';
+	}}
 	color: ${(props) => (props.active ? '#fff' : '')};
-	width: 1.8rem;
 	cursor: pointer;
+	min-width: 1.8rem;
 	background-color: ${(props) => (props.active ? props.color : '#fff')};
 	&:hover {
 		background: ${(props) => (props.active ? '' : '#eee')};
 	}
 `;
-const Solo = styled.button`
-	font-size: 0.75rem;
-	cursor: pointer;
-	border: 1px solid;
-	border-color: ${(props) => (props.active ? lighten(0.05, props.color) : '#eee')};
-	border-radius: 0 5px 5px 0;
-	color: ${(props) => (props.active ? '#fff' : '')};
-	margin-left: -1px;
-	width: 1.8rem;
-	background-color: ${(props) => (props.active ? lighten(0.05, props.color) : '#fff')};
-	&:hover {
-		background: ${(props) => (props.active ? '' : '#eee')};
-	}
+const Clear = styled(Button)`
+	margin-right: 0.5rem;
 `;
 
 export default TrackItem;
