@@ -1,4 +1,4 @@
-import { loadState, saveState } from './local-storage';
+import { loadState, saveState } from './utility/local-storage';
 
 const colors = [
 	['#305f72', '#f1d1b5', '#f0b7a4', '#f18c8e', '#305f72', '#f1d1b5', '#f0b7a4', '#f18c8e'],
@@ -106,7 +106,7 @@ export const initialState = loadState() || {
 	tempo: 110,
 	activeTrack: 0,
 	soloed: null,
-	useInternalAudio: false,
+	useInternalAudio: true,
 	current: { index: 0, name: 'Loop 1', sequence: getInitialSequence(8, 16) },
 	saved: [
 		{ name: 'Loop 1', sequence: [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]] },

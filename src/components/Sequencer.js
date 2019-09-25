@@ -1,7 +1,7 @@
 import React, { useState, memo } from 'react';
 import styled from 'styled-components';
-import usePlaySequence from './usePlaySequence';
-import { useRing, useStepMarker, useTransport } from './drawing';
+import usePlaySequence from '../hooks/usePlaySequence';
+import { useRing, useStepMarker, useTransport } from '../hooks/drawing';
 
 const width = 520;
 const height = 520;

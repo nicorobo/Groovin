@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import { useMIDI, useMIDIConnectionManager } from '@react-midi/hooks';
 import { MIDIConnectionManager } from '@react-midi/components';
 import { reducer, initialState } from './reducer';
-import TrackList from './TrackList';
-import Sequencer from './Sequencer';
-import Settings from './Settings';
-import { useAudio } from './useAudio';
+import TrackList from './components/TrackList';
+import Sequencer from './components/Sequencer';
+import Settings from './components/Settings';
+import { useAudio } from './hooks/useAudio';
 
 const App = () => {
 	const [inputs, outputs, hasMIDI] = useMIDI();
