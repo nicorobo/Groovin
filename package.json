@@ -7,7 +7,7 @@
 		"@react-midi/hooks": "0.0.9",
 		"@tonaljs/midi": "^3.2.1",
 		"body-scroll-lock": "^2.6.4",
-		"d3": "^5.9.2",
+		"d3": "^7.6.1",
 		"polished": "^3.2.0",
 		"react": "^16.8.6",
 		"react-dom": "^16.8.6",
